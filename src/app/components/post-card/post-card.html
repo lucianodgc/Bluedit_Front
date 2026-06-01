@@ -1,0 +1,31 @@
+    <div class="card mb-3 shadow-lg border-0 bg-dark text-white">
+    
+    <div class="card-header border-0 small pt-3">
+        <a [routerLink]="['/profile', post.userId]" class="text-decoration-none d-inline-flex align-items-center">
+            <img 
+            [src]="post.avatarUrl || 'https://api.dicebear.com/7.x/initials/svg?seed=' + post.username" 
+            class="rounded-circle me-2 border border-secondary border-opacity-50"
+            style="width: 28px; height: 28px; object-fit: cover;">
+            <b>u/{{ post.username }}</b>
+        </a>
+    </div>
+
+    <div class="card-body py-2">
+        <h5 class="card-title fw-bold">{{ post.title }}</h5>
+        <p class="card-text text-secondary">{{ post.content }}</p>
+    </div>
+
+    <div class="card-footer border-0 bg-transparent pb-3">
+        <span class="badge bg-dark rounded-pill">
+            <button class="btn btn-outline-light btn-sm">↑</button> 
+            {{ post.votesCount }} votes
+            <button class="btn btn-outline-light btn-sm">↓</button>
+        </span>
+
+        <span class="badge bg-dark rounded-pill">
+            <button class="btn btn-outline-light btn-sm">💬</button> 
+            {{ post.commentsCount }} comments
+        </span>
+    </div>
+
+    </div>

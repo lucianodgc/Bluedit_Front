@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+@use "bootstrap/scss/bootstrap" with (
+  $primary: #ffffff,
+  $enable-shadows: true,
+  $body-bg: #020318,
+);
+
+hr {
+  color: #ffffff;
+  margin-top: 0;
+}
