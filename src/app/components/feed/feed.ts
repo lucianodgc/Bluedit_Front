@@ -1,7 +1,7 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { PostCard } from '../post-card/post-card';
-import { Post } from '../../interfaces';
-import { PostService } from '../../services/post.service';
+import { ApiResponse, Post } from '../../interfaces';
+import { PostService } from '../../services';
 
 @Component({
   selector: 'app-feed',
@@ -9,20 +9,16 @@ import { PostService } from '../../services/post.service';
   templateUrl: './feed.html',
   styleUrl: './feed.scss',
 })
-export class Feed {
+export class Feed implements OnInit {
   private postService = inject(PostService);
-
-  constructor(private cdr: ChangeDetectorRef) {
-    this.ngOnInit()
-  }
-
+  private cdr = inject(ChangeDetectorRef);
 
   listOfPosts: Post[] = [];
 
   ngOnInit() {
     this.postService.getPosts().subscribe({
-      next: (posts) => {
-        this.listOfPosts = posts;
+      next: (response: ApiResponse) => {
+        this.listOfPosts = response.data;
         this.cdr.detectChanges();
       },
       error: (err) => console.error('Error al cargar posts', err)

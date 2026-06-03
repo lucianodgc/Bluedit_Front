@@ -1,8 +1,7 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from '../../services/user.service';
-import { AuthService } from '../../services/auth.service';
+import { AuthService, UserService } from '../../services';
 
 @Component({
   selector: 'app-register',
@@ -25,12 +24,12 @@ export class Register {
         next: (response) => {
           this.authService.login(form.value.email, form.value.password).subscribe({
             next: () => {
-              this.router.navigate(['/']);
+              this.router.navigate(['/edit-profile/' + response.data.id]);
             }
           });
         },
         error: (err) => {
-          this.error = err.error?.message || 'Ocurrió un error durante el registro.';
+          this.error = err.message || 'Ocurrió un error durante el registro.';
           this.cdr.detectChanges();
         }
       });

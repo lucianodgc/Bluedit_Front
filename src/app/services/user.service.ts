@@ -2,8 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { User, ApiResponse} from '../interfaces';
-import { RegisterRequest } from '../interfaces/register-request';
+import { ApiResponse, RegisterRequest, User } from '../interfaces';
 
 
 @Injectable({
@@ -18,8 +17,8 @@ export class UserService {
     return this.http.post<ApiResponse>(`${this.url}?action=register`, data);
   }
 
-  getProfileById(id: number): Observable<User> {
-    return this.http.get<User>(`${this.url}?action=profile&id=${id}`);
+  getProfileById(id: number): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.url}?action=profile&id=${id}`);
   }
 
   updateProfile(data: Partial<User>): Observable<ApiResponse> {

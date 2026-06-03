@@ -1,17 +1,29 @@
-
-<div class="container mt-4 card bg-dark text-white border-secondary p-4">
-    <div class="d-flex align-items-center mb-5">
-        <img 
-        [src]="user?.avatarUrl || 'https://api.dicebear.com/7.x/initials/svg?seed=' + user?.username" 
-        class="rounded-circle border border-secondary border-opacity-50"
-        style="width: 96px; height: 96px; object-fit: cover;">
-        <div class="ms-5">
-            <h2 class="fw-bold text-white mb-1">{{ user?.username }}</h2>
-            <p class="fw-bold text-white-50 mb-1">u/{{ user?.username }}</p>
+<div class="container mt-4 mb-5 card bg-dark text-white border-secondary p-4">
+    <div class="d-flex align-items-start mb-3">
+        
+        <div class="d-flex flex-column align-items-center">
+            <img 
+            [src]="user?.avatarUrl || 'https://api.dicebear.com/7.x/initials/svg?seed=' + user?.username" 
+            class="rounded-circle border border-secondary border-opacity-50"
+            style="width: 96px; height: 96px; object-fit: cover;">
             
+            @if (authService.currentUser()?.id === user?.id) {
+                <div class="mt-4">
+                    <button class="btn btn-primary btn-sm" [routerLink]="['/edit-profile', user?.id]">Edit Profile</button>
+                </div>
+            }
         </div>
+        
+        <div class="ms-3 mt-1">
+            <h2 class="fw-bold text-white mb-1">{{ user?.username }}</h2>
+            <p class="fw-bold text-white-50 mb-0">u/{{ user?.username }}</p>
+        </div>
+
         <div class="ms-auto text-end">
-            <p class="text-secondary">Joined on <br>{{ user?.createdAt}}</p>
+            <p class="mb-1">Location: {{ user?.location || 'Not specified' }}</p>
+            <p class="mb-1">Birth Date: {{ user?.birthDate || 'Not specified' }}</p>
+            <p class="mb-1">Gender: {{ user?.gender || 'Not specified' }}</p>
+            <p class="text-secondary mb-0">Joined on <br>{{ user?.createdAt}}</p>
         </div>
     </div>
 

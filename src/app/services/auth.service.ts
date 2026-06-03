@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { User } from '../interfaces';
+import { ApiResponse, User } from '../interfaces';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs';
@@ -22,12 +22,12 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-      return this.http.post<any>(`${this.url}?action=login`, { 
+      return this.http.post<ApiResponse>(`${this.url}?action=login`, { 
           email, 
           password 
       }).pipe(
         tap(response => {
-          this.saveSession(response.user);
+          this.saveSession(response.data);
         })
       );
     }
