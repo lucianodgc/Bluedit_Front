@@ -10,24 +10,36 @@
 
     <div class="nav-actions d-flex align-items-center">
 
-    @if (!isLoggedIn) {
-        <a class="btn btn-outline-secondary me-2" routerLink="/signup">Sign Up</a>
-        <a class="btn btn-dark" routerLink="/login">Log In</a>
-    }
+        @if (!authService.currentUser()) {
+            <a class="btn btn-outline-secondary me-2" routerLink="/signup">Sign Up</a>
+            <a class="btn btn-dark" routerLink="/login">Log In</a>
+        }
 
-    @if (isLoggedIn) {
-        <a class="btn btn-secondary me-3" routerLink="/create-post">
-            + Create
-        </a>
-        
-        <a class="profile-circle bg-secondary text-white rounded-circle d-flex justify-content-center align-items-center" style="width: 40px; height: 40px; cursor: pointer;" routerLink="/profile">
-            P
-        </a>
-    }
+        @if (authService.currentUser(); as user) {
+            <a class="btn btn-secondary me-3" routerLink="/create-post">
+                + Create
+            </a>
+            
+            <div class="profile-container position-relative">
+                
+                <div (click)="toggleMenu()">
+                    <img 
+                    [src]="user?.avatarUrl || 'https://api.dicebear.com/7.x/initials/svg?seed=' + user?.username" class="profile-circle bg-secondary text-white rounded-circle d-flex justify-content-center align-items-center" 
+                     style="width: 40px; height: 40px; cursor: pointer;">
+                </div>
 
-    <button class="btn btn-sm btn-danger ms-4" (click)="toggleVista()">
-        Simular Login/Logout
-    </button>
+                    @if (isMenuOpen()) {
+                    <div class="dropdown-menu show" style="position: absolute; right: 0; top: 45px; z-index: 1000; min-width: 150px;">
+                        <a class="dropdown-item" [routerLink]="['/profile', user.id]" (click)="toggleMenu()">
+                            My Profile
+                        </a>
+                        <button class="dropdown-item text-danger" (click)="logout()">
+                            Log Out
+                        </button>
+                    </div>
+                }
+            </div>
+        }
 
     </div>
 </nav>

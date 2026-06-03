@@ -1,0 +1,28 @@
+import { inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { User, ApiResponse} from '../interfaces';
+import { RegisterRequest } from '../interfaces/register-request';
+
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UserService {
+
+  private http = inject(HttpClient);
+  private url = environment.apiUrl + '/users.php';
+
+  register(data: RegisterRequest): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(`${this.url}?action=register`, data);
+  }
+
+  getProfileById(id: number): Observable<User> {
+    return this.http.get<User>(`${this.url}?action=profile&id=${id}`);
+  }
+
+  updateProfile(data: Partial<User>): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(`${this.url}?action=update`, data);
+  }
+}

@@ -1,1 +1,78 @@
-<p>register works!</p>
+<div class="container mt-5 card bg-dark text-white border-secondary p-4  shadow-lg">
+    <h1 class="fw-bold text-center mt-2 card-title">Sign Up</h1>
+
+    <form (ngSubmit)="register(registerForm)" #registerForm="ngForm" class="card-body px-5">
+        <div class="row mt-4">
+            <label for="email" class="col-sm-3 col-form-label">Email</label>
+            <div class="col-sm-8">
+                <input type="email" class="form-control" id="email" name="email" 
+                    ngModel required email #email="ngModel">
+                @if (email.invalid && (email.dirty || email.touched)) {
+                    <div class="text-danger mt-1">
+                        @if (email.errors?.['required']) { <small>El email es obligatorio.</small> }
+                        @if (email.errors?.['email']) { <small>Formato de email inválido.</small> }
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="mt-4 row">
+            <label for="username" class="col-sm-3 col-form-label">Username</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="username" name="username" 
+                    ngModel required minlength="3" #username="ngModel">
+                @if (username.invalid && (username.dirty || username.touched)) {
+                    <div class="text-danger mt-1">
+                        @if (username.errors?.['required']) { <small>El nombre de usuario es obligatorio.</small> }
+                        @if (username.errors?.['minlength']) { <small>El usuario debe tener al menos 3 caracteres.</small> }
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="mt-4 row">
+            <label for="password" class="col-sm-3 col-form-label">Password</label>
+            <div class="col-sm-8">
+                <input type="password" class="form-control" id="password" name="password" 
+                    ngModel required minlength="6" #password="ngModel">
+                @if (password.invalid && (password.dirty || password.touched)) {
+                    <div class="text-danger mt-1">
+                        @if (password.errors?.['required']) { <small>La contraseña es obligatoria.</small> }
+                        @if (password.errors?.['minlength']) { <small>La contraseña debe tener al menos 6 caracteres.</small> }
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="mt-4 row">
+            <label for="confirmPassword" class="col-sm-3 col-form-label">Confirm Password</label>
+            <div class="col-sm-8">
+                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" 
+                    ngModel required minlength="6" #confirmPassword="ngModel">
+                    <div class="text-danger mt-1">
+                        @if (registerForm.value.password !== registerForm.value.confirmPassword) { 
+                            <small>Las contraseñas no coinciden.</small> 
+                        }
+                    </div>
+            </div>
+        </div>
+
+        <div class="mt-2 row">
+            <label for="profilePhoto" class="col-sm-3 col-form-label">Profile photo</label>
+            <div class="col-sm-8">
+                <input type="file" class="form-control form-control-sm" id="profilePhoto" name="profilePhoto" 
+                ngModel #profilePhoto="ngModel">
+            </div>
+        </div>
+
+        @if (error) {
+            <p class="text-danger text-center mt-5">{{ error }}</p>
+        }
+
+        <div class="d-md-flex mt-5 justify-content-center">
+            <button type="submit" class="btn btn-primary mb-3" [disabled]="!registerForm.valid">
+                <span>Continue</span>
+            </button>
+        </div>
+    </form>
+</div>
