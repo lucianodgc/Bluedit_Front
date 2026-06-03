@@ -1,18 +1,20 @@
-<div class="row justify-content-center">
-    <div class="col-md-8 col-lg-6">
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
 
-    <select class="form-select w-25" aria-label="Filter posts">
-        <option disabled>Sort by</option>
-        <option value="1" selected>Most recent</option>
-        <option value="2">Most voted</option>
-    </select>
+        <select class="form-select w-auto" aria-label="Filter posts">
+            <option disabled>Sort by</option>
+            <option value="1" selected>Most recent</option>
+            <option value="2">Most voted</option>
+        </select>
 
-    <hr class="mb-4 mt-4">
-
-    @for (post of listOfPosts; track post.id) {
-        <app-post-card [post]="post"></app-post-card>
         <hr class="mb-4 mt-4">
-    }
 
+        @for (post of listOfPosts; track post.id) {
+            <app-post-card [post]="post"></app-post-card>
+            <hr class="mb-4 mt-4">
+        }
+
+        </div>
     </div>
 </div>
