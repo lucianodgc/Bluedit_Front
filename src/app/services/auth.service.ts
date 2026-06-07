@@ -27,22 +27,25 @@ export class AuthService {
           password 
       }).pipe(
         tap(response => {
-          this.saveSession(response.data);
+          const { token, ...user } = response.data;
+          this.saveSession(token, user);
         })
       );
     }
 
-  saveSession(user: User) {
+  saveSession(token: string, user: User ) {
+    localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUser.set(user);
   }
 
   logout() {
+    localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.currentUser.set(null);
   }
 
   isLoggedIn(): boolean {
-    return this.currentUser() !== null;
+    return this.currentUser() !== null && localStorage.getItem('token') !== null;
   }
 }

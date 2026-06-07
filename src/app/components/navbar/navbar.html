@@ -24,7 +24,7 @@
                 
                 <div (click)="toggleMenu()">
                     <img 
-                    [src]="user?.avatarUrl || 'https://api.dicebear.com/7.x/initials/svg?seed=' + user?.username" class="profile-circle bg-secondary text-white rounded-circle d-flex justify-content-center align-items-center" 
+                    [src]="user | avatarUrl" class="profile-circle bg-secondary text-white rounded-circle d-flex justify-content-center align-items-center" 
                      style="width: 40px; height: 40px; cursor: pointer;">
                 </div>
 

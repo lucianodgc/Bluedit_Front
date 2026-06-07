@@ -3,7 +3,7 @@
     <div class="card-header border-0 small pt-3">
         <a [routerLink]="['/profile', post.userId]" class="text-decoration-none d-inline-flex align-items-center">
             <img 
-            [src]="post.avatarUrl || 'https://api.dicebear.com/7.x/initials/svg?seed=' + post.username" 
+            [src]="post | avatarUrl" 
             class="rounded-circle me-2 border border-secondary border-opacity-50"
             style="width: 28px; height: 28px; object-fit: cover;">
             <b>u/{{ post.username }}</b>

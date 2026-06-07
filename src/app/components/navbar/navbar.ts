@@ -1,10 +1,11 @@
 import { Component, HostListener, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services';
+import { AvatarPipe } from '../../pipes/avatar-pipe';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink],
+  imports: [RouterLink, AvatarPipe],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss'
 })
