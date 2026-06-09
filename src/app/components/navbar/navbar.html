@@ -25,7 +25,7 @@
                 <div (click)="toggleMenu()">
                     <img 
                     [src]="user | avatarUrl" class="profile-circle bg-secondary text-white rounded-circle d-flex justify-content-center align-items-center" 
-                     style="width: 40px; height: 40px; cursor: pointer;">
+                     style="width: 40px; height: 40px; cursor: pointer; object-fit: cover;">
                 </div>
 
                     @if (isMenuOpen()) {

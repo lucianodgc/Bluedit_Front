@@ -21,7 +21,7 @@ export class UserService {
     return this.http.get<ApiResponse>(`${this.url}?action=profile&id=${id}`);
   }
 
-  updateProfile(data: Partial<User>): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(`${this.url}?action=update`, data);
+  updateProfile(formData: FormData): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(`${this.url}?action=update`, formData);
   }
 }

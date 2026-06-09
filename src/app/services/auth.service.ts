@@ -39,6 +39,11 @@ export class AuthService {
     this.currentUser.set(user);
   }
 
+  updateUserState(updatedUserData: any) {
+    localStorage.setItem('user', JSON.stringify(updatedUserData));
+    this.currentUser.set(updatedUserData);
+  }
+
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');

@@ -7,11 +7,13 @@ import { environment } from '../../environments/environment';
 export class AvatarPipe implements PipeTransform {
   transform(user: any): unknown {
     if (user?.avatarUrl) {
-      return user.avatarUrl;
+      if (user.avatarUrl.startsWith('http')) {
+        return user.avatarUrl;
+      }
+      return `${environment.serverUrl}${user.avatarUrl}`;
     }
 
-    const seed = user?.username || user || 'default';
+    const seed = typeof user === 'string' ? user : (user?.username || 'default');
     return `${environment.avatarUrl}${seed}`;
-  
   }
 }

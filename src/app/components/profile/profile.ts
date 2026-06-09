@@ -2,14 +2,16 @@ import { Component, inject, OnInit, ChangeDetectorRef, OnDestroy } from '@angula
 import { ActivatedRoute, RouterLink} from '@angular/router';
 import { PostCard } from '../post-card/post-card';
 import { ApiResponse, Post, User } from '../../interfaces';
-import { AuthService, PostService, UserService } from '../../services';
+import { AuthService, CountryService, PostService, UserService } from '../../services';
 import { Subscription } from 'rxjs';
 import { AvatarPipe } from '../../pipes/avatar-pipe';
+import { CountryNamePipe } from '../../pipes/country-name-pipe';
+import { AsyncPipe } from '@angular/common';
 
 
 @Component({
   selector: 'app-profile',
-  imports: [PostCard, RouterLink, AvatarPipe],
+  imports: [PostCard, RouterLink, AvatarPipe, CountryNamePipe, AsyncPipe],
   templateUrl: './profile.html',
   styleUrl: './profile.scss',
 })
@@ -19,6 +21,7 @@ export class Profile implements OnInit, OnDestroy {
   private postService = inject(PostService);
   authService = inject(AuthService);
   private cdr = inject(ChangeDetectorRef);
+  public countryService = inject(CountryService);
 
   user: User | null = null;
   userPosts: Post[] = [];

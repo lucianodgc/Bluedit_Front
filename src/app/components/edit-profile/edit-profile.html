@@ -1,1 +1,54 @@
-<p>edit-profile works!</p>
+<div class="container mt-5 card bg-dark text-white border-secondary p-4 shadow-lg">
+    <h1 class="fw-bold text-center mt-2 card-title">Optional data</h1>
+
+    <form (ngSubmit)="update(updateForm)" #updateForm="ngForm" class="card-body px-5">
+        
+        <div class="row mt-4">
+            <label for="location" class="col-sm-3 col-form-label">Location</label>
+            <div class="col-sm-6">
+                <select id="location" name="location" class="form-select" ngModel>
+                    <option value="" disabled selected>Choose a country</option>
+                    @for (country of (countryService.countries$ | async); track country.cca3) {
+                        <option [value]="country.name?.translations?.spa?.common || country.name?.common">
+                            {{ country.name?.translations?.spa?.common || country.name?.common }}
+                        </option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="mt-4 row">
+            <label for="birthDate" class="col-sm-3 col-form-label">Birth Date
+            </label>
+            <div class="col-sm-4">
+                <input type="date" class="form-control" id="birthDate" name="birthDate" 
+                    ngModel #birthDate="ngModel">
+            </div>
+        </div>
+
+        <div class="mt-4 row">
+            <label for="gender" class="col-sm-3 col-form-label">Gender</label>
+            <div class="col-sm-4">
+                <select id="gender" name="gender" class="form-select" ngModel>
+                    <option value="" disabled selected>Choose a gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="mt-4 row">
+            <label for="avatar" class="col-sm-3 col-form-label">Avatar</label>
+            <div class="col-sm-8">
+                <input type="file" class="form-control" id="avatar" name="avatar" accept="image/*" (change)="onFileSelected($event)">
+            </div>
+        </div>
+
+        <div class="d-md-flex mt-5 justify-content-center">
+            <button type="submit" class="btn btn-primary mb-3">
+                <span>Continue</span>
+            </button>
+        </div>
+    </form>
+</div>
