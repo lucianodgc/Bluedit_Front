@@ -9,4 +9,5 @@ export interface Post {
   votesCount: number;
   commentsCount: number;
   createdAt: string;
+  userLoggedVote?: number | null;
 }

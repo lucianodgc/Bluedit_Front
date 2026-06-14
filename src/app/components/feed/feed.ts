@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { PostCard } from '../post-card/post-card';
 import { ApiResponse, Post } from '../../interfaces';
-import { PostService } from '../../services';
+import { AuthService, PostService } from '../../services';
 
 @Component({
   selector: 'app-feed',
@@ -12,11 +12,14 @@ import { PostService } from '../../services';
 export class Feed implements OnInit {
   private postService = inject(PostService);
   private cdr = inject(ChangeDetectorRef);
+  private authService = inject(AuthService);
 
   listOfPosts: Post[] = [];
 
   ngOnInit() {
-    this.postService.getPosts().subscribe({
+    const currentUserId = this.authService.currentUser()?.id ?? null;
+
+    this.postService.getPosts(currentUserId).subscribe({
       next: (response: ApiResponse) => {
         this.listOfPosts = response.data;
         this.cdr.detectChanges();

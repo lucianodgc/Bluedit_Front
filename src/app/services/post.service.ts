@@ -15,11 +15,22 @@ export class PostService {
     return this.http.post<ApiResponse>(`${this.url}`, data);
   }
 
-  getPosts(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.url);
+  getPosts(currentUserId: number | null): Observable<ApiResponse> {
+    let url = this.url;
+  
+    if (currentUserId) {
+      url += `?currentUserId=${currentUserId}`;
+    }
+    return this.http.get<ApiResponse>(url);
   }
 
-  getPostsByUserId(userId: number): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.url}?user_id=${userId}`);
+  getPostsByUserId(userId: number, currentUserId: number | null): Observable<ApiResponse> {
+    let url = `${this.url}?userId=${userId}`;
+  
+    if (currentUserId) {
+      url += `?currentUserId=${currentUserId}`;
+    }
+    
+    return this.http.get<ApiResponse>(url);
   }
 }

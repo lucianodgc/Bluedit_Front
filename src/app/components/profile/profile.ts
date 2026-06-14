@@ -40,6 +40,8 @@ export class Profile implements OnInit, OnDestroy {
   }
 
   loadUserData(userId: number) {
+      const currentUserId = this.authService.currentUser()?.id ?? null;
+
       this.userService.getProfileById(userId).subscribe({
         next: (response: ApiResponse) => {
           this.user = response.data;
@@ -48,7 +50,7 @@ export class Profile implements OnInit, OnDestroy {
         error: (err) => console.error('Error al cargar usuario', err)
       });
 
-      this.postService.getPostsByUserId(userId).subscribe({
+      this.postService.getPostsByUserId(userId, currentUserId).subscribe({
         next: (response: ApiResponse) => {
           this.userPosts = response.data;
           this.cdr.detectChanges();

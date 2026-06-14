@@ -35,9 +35,11 @@
 
     <div class="card-footer border-0 bg-transparent pb-3">
         <span class="badge bg-dark rounded-pill">
-            <button class="btn btn-outline-light btn-sm">↑</button> 
+            <button class="btn btn-outline-light btn-sm" 
+            (click)="handleVote('up')">↑</button> 
             {{ post.votesCount }} votes
-            <button class="btn btn-outline-light btn-sm">↓</button>
+            <button class="btn btn-outline-light btn-sm" 
+            (click)="handleVote('down')">↓</button>
         </span>
 
         <span class="badge bg-dark rounded-pill">

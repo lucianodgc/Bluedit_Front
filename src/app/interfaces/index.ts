@@ -3,3 +3,4 @@ export * from './post.interface';
 export * from './comment.interface';
 export * from './api-response';
 export * from './register-request';
+export * from './vote-request';

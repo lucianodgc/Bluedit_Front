@@ -49,8 +49,8 @@ export class EditProfile {
     }
 
     this.userService.updateProfile(formData).subscribe({
-      next: (res) => {
-        console.log('Actualizado:', res);
+      next: (response) => {
+        console.log('Actualizado:', response);
         this.userService.getProfileById(this.userId).subscribe((profileRes: any) => {
             this.authService.updateUserState(profileRes.data); 
             this.router.navigate(['/feed']);
