@@ -57,7 +57,7 @@ export class PostCard implements OnInit {
     };
 
     this.voteService.votePost(voteData).subscribe({
-      next: (response) => console.log('Voto sincronizado:', response?.message),
+      next: (response) => {},
       error: (err) => {
         console.error('Error en el servidor, revirtiendo voto:', err);
         this.userVote = previousUserVote;

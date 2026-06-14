@@ -54,7 +54,6 @@ export class CreatePost {
 
       this.postService.createPost(formData).subscribe({
         next: (response) => {
-          console.log('Post creado:', response);
           this.router.navigate(['/feed']);
         },
         error: (err) => {
