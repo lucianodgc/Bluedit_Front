@@ -1,1 +1,85 @@
-<p>create-post works!</p>
+<div class="container mt-5 card bg-dark text-white border-secondary p-4 shadow-lg">
+    <h1 class="fw-bold text-center mt-2 card-title">Create Post</h1>
+
+    <form (ngSubmit)="create(createForm)" #createForm="ngForm" class="card-body px-5">
+
+        <div class="row mt-4">
+            <label class="col-sm-3 col-form-label">Type</label>
+            <div class="col-sm-8 d-flex gap-2">
+                <button type="button"
+                    class="btn"
+                    [class.btn-primary]="selectedType === 'text'"
+                    [class.btn-outline-secondary]="selectedType !== 'text'"
+                    (click)="setType('text', createForm)">
+                    Text
+                </button>
+                <button type="button"
+                    class="btn"
+                    [class.btn-primary]="selectedType === 'multimedia'"
+                    [class.btn-outline-secondary]="selectedType !== 'multimedia'"
+                    (click)="setType('multimedia', createForm)">
+                    Multimedia
+                </button>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <label for="title" class="col-sm-3 col-form-label">Title</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control text-primary focus-ring" id="title" name="title"
+                    placeholder="Post title"
+                    ngModel required minlength="5" #title="ngModel">
+                @if (title.invalid && (title.dirty || title.touched)) {
+                    <div class="text-danger mt-1">
+                        @if (title.errors?.['required']) { <small>El título es obligatorio.</small> }
+                        @if (title.errors?.['minlength']) { <small>El título debe tener al menos 5 caracteres.</small> }
+                    </div>
+                }
+            </div>
+        </div>
+        
+        <div class="mt-4 row">
+            <label for="content" class="col-sm-3 col-form-label">Content</label>
+            <div class="col-sm-8">
+
+                @if (selectedType === 'text') {
+                    <textarea class="form-control" id="content" name="content"
+                        placeholder="What's on your mind?"
+                        rows="5"
+                        ngModel required minlength="10" #content="ngModel">
+                    </textarea>
+                    @if (content.invalid && (content.dirty || content.touched)) {
+                        <div class="text-danger mt-1">
+                            @if (content.errors?.['required']) { <small>El contenido es obligatorio.</small> }
+                            @if (content.errors?.['minlength']) { <small>El contenido debe tener al menos 10 caracteres.</small> }
+                        </div>
+                    }
+                }
+
+                @if (selectedType === 'multimedia') {
+                    <input type="file" class="form-control" id="content" name="content"
+                        accept="image/*,video/*"
+                        required ngModel #content="ngModel"
+                        (change)="onFileSelected($event)">
+                    @if (content.invalid && (content.dirty || content.touched)) {
+                        <div class="text-danger mt-1">
+                            @if (content.errors?.['required']) { <small>Seleccioná un archivo.</small> }
+                        </div>
+                    }
+                }
+
+            </div>
+        </div>
+
+        @if (error) {
+            <p class="text-danger text-center mt-5">{{ error }}</p>
+        }
+
+        <div class="d-md-flex mt-5 justify-content-center">
+            <button type="submit" class="btn btn-primary mb-3" [disabled]="!createForm.valid">
+                <span>Post</span>
+            </button>
+        </div>
+
+    </form>
+</div>

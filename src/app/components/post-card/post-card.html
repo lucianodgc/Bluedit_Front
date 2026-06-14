@@ -12,7 +12,25 @@
 
     <div class="card-body py-2">
         <h5 class="card-title fw-bold">{{ post.title }}</h5>
-        <p class="card-text text-secondary">{{ post.content }}</p>
+        @if (post.type === 'text') {
+            <p class="card-text text-secondary">{{ post.content }}</p>
+        }
+        @else if (post.type === 'multimedia') {
+            <div class="media-container mt-4">
+                @if (isVideo(post.content)) {
+                    <video [src]="serverUrl + post.content" 
+                        controls 
+                        class="img-fluid rounded w-100 bg-black" 
+                        style="max-height: 450px;">
+                    </video>
+                } @else {
+                    <img [src]="serverUrl + post.content" 
+                        class="img-fluid rounded w-100" 
+                        alt="Post multimedia" 
+                        style="max-height: 500px; object-fit: contain;">
+                }
+        </div>
+        }
     </div>
 
     <div class="card-footer border-0 bg-transparent pb-3">

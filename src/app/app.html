@@ -1,5 +1,12 @@
-<div>
+<div class="d-flex flex-column min-vh-100">
   <app-navbar/>
+  
   <hr>
-  <router-outlet/>
+
+  <main class="container my-4 flex-grow-1">
+    <router-outlet/>
+  </main>
+  
+  <app-footer/>
+
 </div>
