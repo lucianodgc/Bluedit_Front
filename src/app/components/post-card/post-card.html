@@ -36,10 +36,10 @@
     <div class="card-footer border-0 bg-transparent pb-3">
         <span class="badge bg-dark rounded-pill">
             <button class="btn btn-outline-light btn-sm" 
-            (click)="handleVote('up')">↑</button> 
+            (click)="handleVote('up')" [disabled]="authService.currentUser()">↑</button> 
             {{ post.votesCount }} votes
             <button class="btn btn-outline-light btn-sm" 
-            (click)="handleVote('down')">↓</button>
+            (click)="handleVote('down')" [disabled]="authService.currentUser()">↓</button>
         </span>
 
         <span class="badge bg-dark rounded-pill">

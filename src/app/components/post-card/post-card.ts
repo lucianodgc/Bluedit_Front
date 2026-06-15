@@ -16,8 +16,8 @@ export class PostCard implements OnInit {
   @Input() post!: Post;
 
   private voteService = inject(VoteService);
-  private authService = inject(AuthService);
   private router = inject(Router);
+  authService = inject(AuthService);
 
   readonly serverUrl = environment.serverUrl;
   voteCount: number = 0; 
