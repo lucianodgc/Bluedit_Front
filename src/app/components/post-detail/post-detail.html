@@ -1,1 +1,16 @@
-<p>post-detail works!</p>
+<div class=""container mt-4" style="max-width: 750px">
+    @if(post()) {
+        <app-post-card [post]="post()!"></app-post-card>
+
+        <div class="mt-4 p-3 bg-dark rounded shadow-lg text-white">
+            <h3 class="h5 fw-bold mb-4">Comentarios</h3>
+
+            <app-comment-list [postId]="post()!.id"></app-comment-list>
+        </div>
+    } else {
+        <div class="text-center text-white mt-5">
+            <div class="spinner-border" role="status"></div>
+            <p class="mt-2">Cargando post...</p>
+        </div>
+    }
+</div>

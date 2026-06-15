@@ -1,0 +1,32 @@
+<div class="mb-4">
+  <textarea 
+    [(ngModel)]="newCommentText" 
+    class="form-control bg-secondary bg-opacity-25 text-white border-secondary" 
+    rows="3" 
+    placeholder="¿Qué piensas sobre esto?"></textarea>
+  <button 
+    (click)="onSubmitComment()" 
+    class="btn btn-primary btn-sm mt-2 float-end">
+    Comentar
+  </button>
+  <div class="clearfix"></div>
+</div>
+
+<hr class="border-secondary opacity-25">
+
+<div class="comments-container mt-3">
+  @for (comment of comments(); track comment.id) {
+    <div class="d-flex mb-3 align-items-start">
+      <img [src]="comment.avatarUrl" class="rounded-circle me-2" style="width: 32px; height: 32px; object-fit: cover;">
+      <div class="bg-secondary bg-opacity-10 p-2 rounded flex-grow-1 border border-secondary border-opacity-25">
+        <div class="d-flex justify-content-between small text-secondary">
+          <b class="text-white-50">u/{{ comment.username }}</b>
+          <span>{{ comment.createdAt }}</span>
+        </div>
+        <p class="mb-0 mt-1 text-light small">{{ comment.content }}</p>
+      </div>
+    </div>
+  } @empty {
+    <p class="text-muted text-center small my-4">Nadie ha comentado aún. ¡Sé el primero!</p>
+  }
+</div>

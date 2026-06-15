@@ -42,4 +42,8 @@ export class PostService {
     }
     return this.http.get<ApiResponse>(url);
   }
+
+  getPostById(postId: number) : Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.url}/get_by_id.php?postId=${postId}`);
+  }
 }

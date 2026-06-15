@@ -42,10 +42,9 @@
             (click)="handleVote('down')" [disabled]="authService.currentUser()">↓</button>
         </span>
 
-        <span class="badge bg-dark rounded-pill">
-            <button class="btn btn-outline-light btn-sm">💬</button> 
+        <a [routerLink]="['/post', post.id]" class="badge bg-dark rounded-pill text-decoration-none text-white p-2">
+            <span class="btn btn-outline-light btn-sm border-0 p-0 me-1">💬</span>
             {{ post.commentsCount }} comments
-        </span>
+        </a>
     </div>
-
-    </div>
+</div>
