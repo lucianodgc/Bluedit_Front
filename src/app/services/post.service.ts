@@ -9,14 +9,14 @@ import { Observable } from 'rxjs';
 })
 export class PostService {
   private http = inject(HttpClient);
-  private url = environment.apiUrl + '/posts.php';
+  private url = environment.apiUrl + '/posts';
 
   createPost(data: FormData) : Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(`${this.url}`, data);
+    return this.http.post<ApiResponse>(`${this.url}/create.php`, data);
   }
 
   getPosts(currentUserId: number | null): Observable<ApiResponse> {
-    let url = this.url;
+    let url = `${this.url}/get_all.php`;
   
     if (currentUserId) {
       url += `?currentUserId=${currentUserId}`;
@@ -25,12 +25,21 @@ export class PostService {
   }
 
   getPostsByUserId(userId: number, currentUserId: number | null): Observable<ApiResponse> {
-    let url = `${this.url}?userId=${userId}`;
+    let url = `${this.url}/get_all.php?userId=${userId}`;
+  
+    if (currentUserId) {
+      url += `&currentUserId=${currentUserId}`;
+    }
+    
+    return this.http.get<ApiResponse>(url);
+  }
+
+  getPostsByVotes(currentUserId: number | null): Observable<ApiResponse> {
+    let url = `${this.url}/get_by_votes.php`;
   
     if (currentUserId) {
       url += `?currentUserId=${currentUserId}`;
     }
-    
     return this.http.get<ApiResponse>(url);
   }
 }

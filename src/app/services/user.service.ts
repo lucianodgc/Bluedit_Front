@@ -11,17 +11,17 @@ import { ApiResponse, RegisterRequest } from '../interfaces';
 export class UserService {
 
   private http = inject(HttpClient);
-  private url = environment.apiUrl + '/users.php';
+  private url = environment.apiUrl + '/users';
 
   register(data: RegisterRequest): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(`${this.url}?action=register`, data);
+    return this.http.post<ApiResponse>(`${this.url}/register.php`, data);
   }
 
   getProfileById(id: number): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.url}?action=profile&id=${id}`);
+    return this.http.get<ApiResponse>(`${this.url}/profile.php?id=${id}`);
   }
 
   updateProfile(formData: FormData): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(`${this.url}?action=update`, formData);
+    return this.http.post<ApiResponse>(`${this.url}/update.php`, formData);
   }
 }

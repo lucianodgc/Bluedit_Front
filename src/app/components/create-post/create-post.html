@@ -26,7 +26,7 @@
         <div class="row mt-4">
             <label for="title" class="col-sm-3 col-form-label">Title</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control text-primary focus-ring" id="title" name="title"
+                <input type="text" class="form-control text-primary" id="title" name="title"
                     placeholder="Post title"
                     ngModel required minlength="5" #title="ngModel">
                 @if (title.invalid && (title.dirty || title.touched)) {

@@ -11,9 +11,9 @@ import { VoteRequest } from '../interfaces/vote-request';
 export class VoteService {
 
   private http = inject(HttpClient);
-  private url = environment.apiUrl + '/votes.php';
+  private url = environment.apiUrl + '/votes';
 
   votePost(data: VoteRequest): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(`${this.url}/votar.php`, data);
+    return this.http.post<ApiResponse>(`${this.url}/cast.php`, data);
   }
 }

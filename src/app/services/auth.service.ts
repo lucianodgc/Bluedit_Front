@@ -10,7 +10,7 @@ import { tap } from 'rxjs';
 export class AuthService {
 
   private http = inject(HttpClient);
-  private url = environment.apiUrl + '/users.php';
+  private url = environment.apiUrl + '/users';
 
   currentUser = signal<User | null>(null);
 
@@ -22,7 +22,7 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-      return this.http.post<ApiResponse>(`${this.url}?action=login`, { 
+      return this.http.post<ApiResponse>(`${this.url}/login.php`, { 
           email, 
           password 
       }).pipe(

@@ -2,17 +2,25 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
 
-        <select class="form-select w-auto text-white" aria-label="Filter posts">
+        <select class="form-select w-auto text-white" aria-label="Filter posts" [ngModel]="'1'" #filter="ngModel">
             <option disabled>Sort by</option>
-            <option value="1" selected>Most recent</option>
+            <option value="1">Most recent</option>
             <option value="2">Most voted</option>
         </select>
 
         <hr class="mb-4 mt-4">
 
-        @for (post of listOfPosts; track post.id) {
-            <app-post-card [post]="post"></app-post-card>
-            <hr class="mb-4 mt-4">
+        @if (filter.value == "1") {
+            @for (post of listOrderedByDate; track post.id) {
+                <app-post-card [post]="post"></app-post-card>
+                <hr class="mb-4 mt-4">
+            }
+        }
+        @if (filter.value == "2") {
+            @for (post of listOrderedByVotes; track post.id) {
+                <app-post-card [post]="post"></app-post-card>
+                <hr class="mb-4 mt-4">
+            }
         }
 
         </div>
