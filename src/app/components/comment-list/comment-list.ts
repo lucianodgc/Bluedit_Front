@@ -1,5 +1,5 @@
 import { Component, inject, Input, OnInit, signal } from '@angular/core';
-import { Comment } from '../../interfaces';
+import { Comment, Post } from '../../interfaces';
 import { FormsModule } from '@angular/forms';
 import { AuthService, CommentService } from '../../services';
 import { CommentRequest } from '../../interfaces/comment-request';
@@ -13,7 +13,7 @@ import { AvatarPipe } from '../../pipes/avatar-pipe';
     styleUrl: './comment-list.scss',
 })
 export class CommentList implements OnInit {
-    @Input() postId!: number;
+    @Input() post!: Post;
 
     private authService = inject(AuthService);
     private commentService = inject(CommentService);
@@ -21,13 +21,14 @@ export class CommentList implements OnInit {
 
     comments = signal<Comment[]>([]);
     newCommentText = '';
+    commentCount: number = 0; 
 
     ngOnInit() {
         this.loadComments();    
     }
 
     loadComments() {
-        this.commentService.getCommentsByPostId(this.postId).subscribe({
+        this.commentService.getCommentsByPostId(this.post.id).subscribe({
             next: (response) => {
                 this.comments.set(response.data);
             },
@@ -45,9 +46,14 @@ export class CommentList implements OnInit {
             return;
         }
 
+        this.commentCount = this.post.commentsCount || 0;
+        const previousCommentCount = this.commentCount;
+
+        this.post.commentsCount += 1;
+
         const commentData: CommentRequest = {
             content: this.newCommentText,
-            postId: this.postId,
+            postId: this.post.id,
             userId: currentUserId
         };
 
@@ -56,7 +62,10 @@ export class CommentList implements OnInit {
                 this.newCommentText = '';
                 this.loadComments();
             },
-            error: (err) => console.error('Error al crear comentarios', err)
+            error: (err) => {
+                console.error('Error al crear comentarios', err);
+                this.post.commentsCount = previousCommentCount;
+            }
         });
     }
 }

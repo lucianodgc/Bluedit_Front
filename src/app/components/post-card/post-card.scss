@@ -1,24 +1,21 @@
 button {
   border-radius: 2rem !important;
 }
-/* Clase para la tarjeta cliqueable */
+
 .clickable-post-card {
     cursor: pointer;
     transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-/* Efecto de iluminación al pasar el mouse por las zonas permitidas */
 .clickable-post-card:hover {
-    background-color: #2c3034 !important; /* Un gris sutilmente más claro que el bg-dark original de Bootstrap */
-    box-shadow: 0 0.5rem 2rem rgba(255, 255, 255, 0.03) !important; /* Un leve brillo difuminado hacia afuera */
+    background-color: #2c3034 !important; 
+    box-shadow: 0 0.5rem 2rem rgba(255, 255, 255, 0.03) !important;
 }
 
-/* Restablecemos el cursor por defecto en las zonas que excluimos */
 .non-clickable {
     cursor: default;
 }
 
-/* Pantalla oscura que tapa todo */
 .fullscreen-overlay {
     position: fixed;
     top: 0;
@@ -26,19 +23,18 @@ button {
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.9);
-    z-index: 9999; /* Para que quede por encima de los navbars y todo */
+    z-index: 9999;
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: zoom-out; /* Cursor para achicar */
+    cursor: zoom-out;
 }
 
-/* La imagen/video gigante en el centro */
 .fullscreen-media {
     max-width: 90%;
     max-height: 90%;
     object-fit: contain;
     border-radius: 8px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    cursor: default; /* Si toca la imagen en sí, no hace nada, tiene que tocar afuera o la X para salir */
+    cursor: default;
 }

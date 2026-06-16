@@ -2,13 +2,20 @@
      (click)="!isDetailView && goToPost(post.id)">
     
     <div class="card-header border-0 small pt-3">
-        <a [routerLink]="['/profile', post.userId]" class="text-decoration-none d-inline-flex align-items-center">
-            <img 
-            [src]="post | avatarUrl" 
-            class="rounded-circle me-2 border border-secondary border-opacity-50"
-            style="width: 28px; height: 28px; object-fit: cover;">
-            <b>u/{{ post.username }}</b>
-        </a>
+        @if (post.username) {
+            <a [routerLink]="['/profile', post.userId]" class="text-decoration-none d-inline-flex align-items-center">
+                <img 
+                [src]="post | avatarUrl" 
+                class="rounded-circle me-2 border border-secondary border-opacity-50"
+                style="width: 28px; height: 28px; object-fit: cover;">
+                <b>u/{{ post.username }}</b>
+            </a>
+        } @else {
+            <div class="d-inline-flex align-items-center text-muted">
+                <div class="rounded-circle me-2 bg-secondary" style="width: 28px; height: 28px;"></div>
+                <b class="text-white-50 fst-italic">[User deleted]</b>
+            </div>
+        }
     </div>
 
     <div class="card-body py-2">
