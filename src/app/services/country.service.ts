@@ -10,7 +10,7 @@ export class CountryService {
   public countries$: Observable<any[]>;
 
   constructor(private http: HttpClient) {
-    this.countries$ = this.http.get<any[]>(`${environment.countryUrl}?fields=name,cca3,translations`).pipe(
+    this.countries$ = this.http.get<any[]>('/assets/countries.json').pipe(
       map(countries => {
         return countries.sort((a, b) => {
           const nameA = a.name?.translations?.spa?.common || a.name?.common || '';

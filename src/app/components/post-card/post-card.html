@@ -1,4 +1,4 @@
-    <div class="card mb-3 shadow-lg border-0 bg-dark text-white">
+    <div class="card mb-3 shadow-lg border-0 bg-dark text-white clickable-post-card" (click)="goToPost(post.id)">
     
     <div class="card-header border-0 small pt-3">
         <a [routerLink]="['/profile', post.userId]" class="text-decoration-none d-inline-flex align-items-center">
@@ -16,7 +16,7 @@
             <p class="card-text text-secondary">{{ post.content }}</p>
         }
         @else if (post.type === 'multimedia') {
-            <div class="media-container mt-4">
+            <div class="media-container mt-4" (click)="$event.stopPropagation()">
                 @if (isVideo(post.content)) {
                     <video [src]="serverUrl + post.content" 
                         controls 
@@ -34,15 +34,15 @@
     </div>
 
     <div class="card-footer border-0 bg-transparent pb-3">
-        <span class="badge bg-dark rounded-pill">
+        <span class="badge bg-dark rounded-pill" (click)="$event.stopPropagation()">
             <button class="btn btn-outline-light btn-sm" 
-            (click)="handleVote('up')" [disabled]="authService.currentUser()">↑</button> 
+            (click)="handleVote('up')" [disabled]="authService.currentUser()?.id === post.userId">↑</button> 
             {{ post.votesCount }} votes
             <button class="btn btn-outline-light btn-sm" 
-            (click)="handleVote('down')" [disabled]="authService.currentUser()">↓</button>
+            (click)="handleVote('down')" [disabled]="authService.currentUser()?.id === post.userId">↓</button>
         </span>
 
-        <a [routerLink]="['/post', post.id]" class="badge bg-dark rounded-pill text-decoration-none text-white p-2">
+        <a [routerLink]="['/post', post.id]" (click)="$event.stopPropagation()" class="badge bg-dark rounded-pill text-decoration-none text-white p-2" >
             <span class="btn btn-outline-light btn-sm border-0 p-0 me-1">💬</span>
             {{ post.commentsCount }} comments
         </a>

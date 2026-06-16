@@ -3,11 +3,11 @@
     [(ngModel)]="newCommentText" 
     class="form-control bg-secondary bg-opacity-25 text-white border-secondary" 
     rows="3" 
-    placeholder="¿Qué piensas sobre esto?"></textarea>
+    placeholder="What do you think about this?"></textarea>
   <button 
     (click)="onSubmitComment()" 
     class="btn btn-primary btn-sm mt-2 float-end">
-    Comentar
+    Comment
   </button>
   <div class="clearfix"></div>
 </div>
@@ -27,6 +27,6 @@
       </div>
     </div>
   } @empty {
-    <p class="text-muted text-center small my-4">Nadie ha comentado aún. ¡Sé el primero!</p>
+    <p class="text-muted text-center small my-4">Nobody has commented yet. Be the first!</p>
   }
 </div>

@@ -9,7 +9,8 @@ import { AvatarPipe } from '../../pipes/avatar-pipe';
 @Component({
     selector: 'app-comment-list',
     imports: [FormsModule, AvatarPipe],
-    templateUrl: './comment-list.html'
+    templateUrl: './comment-list.html',
+    styleUrl: './comment-list.scss',
 })
 export class CommentList implements OnInit {
     @Input() postId!: number;

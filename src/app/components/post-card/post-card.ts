@@ -71,4 +71,8 @@ export class PostCard implements OnInit {
   isVideo(url: string): boolean {
     return url ? ['mp4', 'webm', 'ogg'].includes(url.split('.').pop()?.toLowerCase() || '') : false;
   }
+  
+  goToPost(postId: number): void {
+    this.router.navigate(['/post', postId]);
+  }
 }
