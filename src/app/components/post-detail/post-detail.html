@@ -1,6 +1,6 @@
 <div class="container mt-4" style="max-width: 750px">
     @if(post()) {
-        <app-post-card [post]="post()!"></app-post-card>
+        <app-post-card [post]="post()!" [isDetailView]="true"></app-post-card>
 
         <div class="mt-4 p-3 bg-dark rounded shadow-lg text-white">
             <h3 class="h5 fw-bold mb-4">Comments</h3>

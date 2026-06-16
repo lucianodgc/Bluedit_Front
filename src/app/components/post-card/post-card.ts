@@ -14,6 +14,7 @@ import { AuthService } from '../../services';
 })
 export class PostCard implements OnInit {
   @Input() post!: Post;
+  @Input() isDetailView: boolean = false;
 
   private voteService = inject(VoteService);
   private router = inject(Router);
@@ -22,6 +23,8 @@ export class PostCard implements OnInit {
   readonly serverUrl = environment.serverUrl;
   voteCount: number = 0; 
   userVote: 'up' | 'down' | null = null;
+  isMediaExpanded: boolean = false;
+
 
   ngOnInit() {
     this.voteCount = this.post.votesCount || 0;
@@ -71,7 +74,11 @@ export class PostCard implements OnInit {
   isVideo(url: string): boolean {
     return url ? ['mp4', 'webm', 'ogg'].includes(url.split('.').pop()?.toLowerCase() || '') : false;
   }
-  
+
+  toggleMedia() {
+    this.isMediaExpanded = !this.isMediaExpanded;
+  }
+
   goToPost(postId: number): void {
     this.router.navigate(['/post', postId]);
   }

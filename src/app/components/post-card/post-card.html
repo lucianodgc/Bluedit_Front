@@ -1,4 +1,5 @@
-    <div class="card mb-3 shadow-lg border-0 bg-dark text-white clickable-post-card" (click)="goToPost(post.id)">
+    <div class="card mb-3 shadow-lg border-0 bg-dark text-white " [class.clickable-post-card]="!isDetailView" 
+     (click)="!isDetailView && goToPost(post.id)">
     
     <div class="card-header border-0 small pt-3">
         <a [routerLink]="['/profile', post.userId]" class="text-decoration-none d-inline-flex align-items-center">
@@ -24,12 +25,21 @@
                         style="max-height: 450px;">
                     </video>
                 } @else {
-                    <img [src]="serverUrl + post.content" 
-                        class="img-fluid rounded w-100" 
-                        alt="Post multimedia" 
-                        style="max-height: 500px; object-fit: contain;">
+                    <div class="media-container mt-4" style="cursor: zoom-in;" (click)="$event.stopPropagation(); toggleMedia()">
+                        <img [src]="serverUrl + post.content" 
+                            class="img-fluid rounded w-100" 
+                            alt="Post multimedia" 
+                            style="max-height: 500px; object-fit: contain;">
+                    </div>
                 }
         </div>
+        }
+
+        @if (isMediaExpanded) {
+            <div class="fullscreen-overlay" (click)="toggleMedia()">
+                <button class="btn btn-dark position-absolute top-0 end-0 m-3 rounded-circle text-white">𐄂</button>
+                <img [src]="serverUrl + post.content" class="fullscreen-media" (click)="$event.stopPropagation()">
+            </div>
         }
     </div>
 
@@ -42,9 +52,16 @@
             (click)="handleVote('down')" [disabled]="authService.currentUser()?.id === post.userId">↓</button>
         </span>
 
-        <a [routerLink]="['/post', post.id]" (click)="$event.stopPropagation()" class="badge bg-dark rounded-pill text-decoration-none text-white p-2" >
-            <span class="btn btn-outline-light btn-sm border-0 p-0 me-1">💬</span>
-            {{ post.commentsCount }} comments
-        </a>
+        @if (!isDetailView) {
+            <a [routerLink]="['/post', post.id]" (click)="$event.stopPropagation()" class="badge bg-dark rounded-pill text-decoration-none text-white p-2">
+                <span class="btn btn-outline-light btn-sm border-0 p-0 me-1">💬</span>
+                {{ post.commentsCount }} comments
+            </a>
+        } @else {
+            <span class="badge bg-dark rounded-pill text-white p-2">
+                <span class="border-0 p-0 me-1">💬</span>
+                {{ post.commentsCount }} comments
+            </span>
+        }
     </div>
 </div>
