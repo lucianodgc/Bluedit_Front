@@ -17,7 +17,7 @@
 <div class="comments-container mt-3">
   @for (comment of comments(); track comment.id) {
     <div class="d-flex mb-3 align-items-start">
-      <img [src]="comment.avatarUrl" class="rounded-circle me-2" style="width: 32px; height: 32px; object-fit: cover;">
+      <img [src]="comment | avatarUrl" class="rounded-circle me-2" style="width: 32px; height: 32px; object-fit: cover;">
       <div class="bg-secondary bg-opacity-10 p-2 rounded flex-grow-1 border border-secondary border-opacity-25">
         <div class="d-flex justify-content-between small text-secondary">
           <b class="text-white-50">u/{{ comment.username }}</b>

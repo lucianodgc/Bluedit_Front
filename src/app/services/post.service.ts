@@ -43,7 +43,12 @@ export class PostService {
     return this.http.get<ApiResponse>(url);
   }
 
-  getPostById(postId: number) : Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.url}/get_by_id.php?postId=${postId}`);
+  getPostById(id: number, currentUserId: number | null) : Observable<ApiResponse> {
+    let url = `${this.url}/get_post.php?id=${id}`;
+  
+    if (currentUserId) {
+      url += `&currentUserId=${currentUserId}`;
+    }
+    return this.http.get<ApiResponse>(url);
   }
 }

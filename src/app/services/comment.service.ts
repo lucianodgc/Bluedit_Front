@@ -3,6 +3,7 @@ import { ApiResponse } from '../interfaces';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
+import { CommentRequest } from '../interfaces/comment-request';
 
 @Injectable({
     providedIn: 'root',
@@ -11,7 +12,7 @@ export class CommentService {
     private http = inject(HttpClient);
     private url = environment.apiUrl + "/comments";
 
-    createComment(data: FormData): Observable<ApiResponse> {
+    createComment(data: CommentRequest): Observable<ApiResponse> {
         return this.http.post<ApiResponse>(`${this.url}/create.php`, data);
     }
 
@@ -25,11 +26,7 @@ export class CommentService {
     }
 
     getCommentsByPostId(postId: number): Observable<ApiResponse> {
-        return this.http.get<ApiResponse>(`${this.url}/get_all.php?postId=${postId}`);
-    }
-
-    getCommentsByUserId(userId: number): Observable<ApiResponse> {
-        return this.http.get<ApiResponse>(`${this.url}/get_all.php?userId=${userId}`);
+        return this.http.get<ApiResponse>(`${this.url}/get_by_post.php?postId=${postId}`);
     }
 
     deleteComment(commentId: number): Observable<ApiResponse> {

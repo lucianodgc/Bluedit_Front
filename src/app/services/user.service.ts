@@ -18,7 +18,7 @@ export class UserService {
   }
 
   getProfileById(id: number): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.url}/profile.php?id=${id}`);
+    return this.http.get<ApiResponse>(`${this.url}/get_profile.php?id=${id}`);
   }
 
   updateProfile(formData: FormData): Observable<ApiResponse> {

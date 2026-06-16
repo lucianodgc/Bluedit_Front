@@ -1,9 +1,10 @@
-import { Component, inject, Injectable, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PostService } from '../../services';
-import { Post } from '../../interfaces';
+import { AuthService, PostService } from '../../services';
+import { Post, ApiResponse } from '../../interfaces'; // Asegurate de importar ApiResponse si lo usás
 import { CommentList } from '../comment-list/comment-list';
 import { PostCard } from '../post-card/post-card';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-post-detail',
@@ -11,21 +12,40 @@ import { PostCard } from '../post-card/post-card';
   templateUrl: './post-detail.html',
   styleUrl: './post-detail.scss',
 })
-export class PostDetail implements OnInit {
-  private route = inject(ActivatedRoute);
+export class PostDetail implements OnInit, OnDestroy {
+  private route = inject(ActivatedRoute); 
   private postService = inject(PostService);
+  private authService = inject(AuthService);
 
   post = signal<Post | null>(null);
 
+  private paramSub?: Subscription;
+
   ngOnInit() {
-    const postId = this.route.snapshot.paramMap.get('id');
-    if (postId) {
-      this.postService.getPostById(+postId).subscribe({
-        next: (response) => {
+    this.paramSub = this.route.paramMap.subscribe(params => {
+        const idUrl = params.get('id');
+        
+        if (idUrl) {
+            const postIdNum = Number(idUrl);
+            this.loadPostData(postIdNum);
+        }
+    });
+  }
+
+  loadPostData(postId: number) {
+      const currentUserId = this.authService.currentUser()?.id ?? null;
+
+      this.postService.getPostById(postId, currentUserId).subscribe({
+        next: (response: ApiResponse) => {
           this.post.set(response.data);
         },
         error: (err) => console.error("Error al cargar el post", err)
-      })
-    }
+      });
+  }
+
+  ngOnDestroy() {
+      if (this.paramSub) {
+          this.paramSub.unsubscribe();
+      }
   }
 }

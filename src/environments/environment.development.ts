@@ -3,6 +3,6 @@ export const environment = {
     avatarUrl: 'https://api.dicebear.com/9.x/initials/svg?seed=',
     countryUrl: 'https://restcountries.com/v3.1/all',
     serverUrl: 'http://localhost/Inicio/Bluedit/',
-    version: "0.4.0",
+    version: "0.5.2",
     production: false
 };
