@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AuthService, PostService } from '../../services';
 import { Router } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';

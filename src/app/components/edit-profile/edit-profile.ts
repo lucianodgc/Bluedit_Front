@@ -1,8 +1,7 @@
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { AuthService, CountryService, UserService } from '../../services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
-import { environment } from '../../../environments/environment';
 import { AsyncPipe } from '@angular/common';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
