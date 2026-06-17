@@ -4,6 +4,9 @@ import { AuthService } from '../services';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
+import Swal from 'sweetalert2';
+
+let isShowingAlert = false;
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
@@ -25,9 +28,18 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
       if (error.status === 401 && isMyApi) {
+        isShowingAlert = true;
         authService.logout();
-        router.navigate(['/login']);
-        alert('Tu sesión ha expirado. Por favor, inicia sesión de nuevo.');
+        Swal.fire({
+          title: "Token Expirado",
+          icon: "error",
+          text: "Token expirado, por favor inicia sesion de nuevo.",
+          confirmButtonText: "Entendido"
+        }).then(() => {
+          router.navigate(['/login']);
+          isShowingAlert = false;
+        })
+        return throwError(() => error);
       }
       return throwError(() => error);
     })

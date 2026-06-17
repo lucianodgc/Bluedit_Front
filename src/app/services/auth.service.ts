@@ -3,6 +3,7 @@ import { ApiResponse, User } from '../interfaces';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,8 @@ export class AuthService {
   private url = environment.apiUrl + '/users';
 
   currentUser = signal<User | null>(null);
+
+  currentUser$ = toObservable(this.currentUser);
 
   constructor() {
     const savedUser = localStorage.getItem('user');

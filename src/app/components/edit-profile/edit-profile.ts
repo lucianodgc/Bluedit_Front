@@ -5,6 +5,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { AsyncPipe } from '@angular/common';
 import { Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-profile',
@@ -37,6 +38,7 @@ export class EditProfile {
     }
 
   update(form: NgForm) {
+
     const formData = new FormData();
 
     formData.append('id', this.userId.toString());
@@ -50,13 +52,25 @@ export class EditProfile {
 
     this.userService.updateProfile(formData).subscribe({
       next: (response) => {
-        this.userService.getProfileById(this.userId).subscribe((profileRes: any) => {
+      this.userService.getProfileById(this.userId).subscribe((profileRes: any) => {
             this.authService.updateUserState(profileRes.data); 
-            this.router.navigate(['/feed']);
+            Swal.fire({
+              title: "Perfil actualizado",
+              icon: "success",
+              text: `The perfil se ha actualizado correctamente!`,
+              confirmButtonText: 'OK'
+            }).then(() => {
+              this.router.navigate(['/profile/', this.userId]);
+            })
           });
       },
       error: (err) => {
-        this.error = err.message || 'Ocurrió un error durante la actualización.';
+        Swal.fire({
+          title: "Error al actualizar el perfil",
+          icon: "error",
+          text: `Error al actualizar el perfil`,
+          confirmButtonText: "Entendido"
+        })
         this.cdr.detectChanges();
       }
     });

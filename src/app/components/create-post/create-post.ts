@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { AuthService, PostService } from '../../services';
 import { Router } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
-
+import Swal from 'sweetalert2'
 @Component({
   selector: 'app-create-post',
   imports: [FormsModule],
@@ -13,7 +13,6 @@ export class CreatePost {
   private postService = inject(PostService);
   private authService = inject(AuthService);
   private router = inject(Router);
-  private cdr = inject(ChangeDetectorRef);
 
   error: string = '';
   selectedType: 'text' | 'multimedia' = 'text';
@@ -54,11 +53,22 @@ export class CreatePost {
 
       this.postService.createPost(formData).subscribe({
         next: (response) => {
-          this.router.navigate(['/feed']);
+          Swal.fire({
+            title: 'Post creado exitosamente',
+            text: 'Tu post se ha creado exitosamente, puedes verlo en el feed',
+            icon: 'success',
+            showConfirmButton: true
+          }).then(() => {
+            this.router.navigate(['/feed']);
+          })
         },
         error: (err) => {
-          this.error = err.message || 'Ocurrió un error al crear el post.';
-          this.cdr.detectChanges();
+          Swal.fire({
+            title: 'Error',
+            text: 'Ocurrió un error al crear el post.',
+            icon: 'error',
+            showConfirmButton: true
+          })
         }
       });
     }
