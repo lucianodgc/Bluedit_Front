@@ -7,7 +7,7 @@ import { AuthService, UserService } from '../../services';
 
 @Component({
   selector: 'app-account-settings',
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule],
   templateUrl: './account-settings.html',
   styleUrl: './account-settings.scss',
 })
@@ -50,7 +50,7 @@ export class AccountSettings implements OnInit, OnDestroy {
 
         this.userService.updateUsername(data).subscribe({
           next: (response) => {
-            this.authService.updateUserState(response.data); 
+            this.authService.updateUserState(response.data);
             Swal.fire({
               title: '¡Actualizado!',
               text: 'Nombre de usuario cambiado con éxito.',
@@ -97,14 +97,14 @@ export class AccountSettings implements OnInit, OnDestroy {
 
         this.userService.updatePassword(data).subscribe({
           next: (response) => {
-              Swal.fire({
-                title: '¡Éxito!',
-                text: 'Contraseña actualizada correctamente.',
-                icon: 'success',
-                background: '#212529',
-                color: '#fff'
-              });
-              form.resetForm();
+            Swal.fire({
+              title: '¡Éxito!',
+              text: 'Contraseña actualizada correctamente.',
+              icon: 'success',
+              background: '#212529',
+              color: '#fff'
+            });
+            form.resetForm();
           },
           error: (err) => {
             console.error(err);
