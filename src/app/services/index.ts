@@ -3,3 +3,4 @@ export * from './user.service';
 export * from './auth.service';
 export * from './country.service';
 export * from './comment.service';
+export * from './vote.service';

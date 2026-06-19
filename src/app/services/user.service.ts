@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ApiResponse, RegisterRequest } from '../interfaces';
+import { UpdatePasswordRequest } from '../interfaces/update-password-request';
+import { UpdateUsernameRequest } from '../interfaces/update-username-request';
 
 
 @Injectable({
@@ -23,5 +25,17 @@ export class UserService {
 
   updateProfile(formData: FormData): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(`${this.url}/update.php`, formData);
+  }
+
+  updatePassword(data: UpdatePasswordRequest): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(`${this.url}/update_password.php`, data);
+  }
+
+  updateUsername(data: UpdateUsernameRequest): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(`${this.url}/update_username.php`, data);
+  }
+
+  deleteUser(id: number): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(`${this.url}/delete.php?id=${id}`);
   }
 }

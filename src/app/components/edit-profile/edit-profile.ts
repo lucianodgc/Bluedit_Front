@@ -36,41 +36,61 @@ export class EditProfile {
       });
     }
 
-  update(form: NgForm) {
+update(form: NgForm) {
+    Swal.fire({
+      title: '¿Guardar cambios?',
+      text: 'Se actualizarán los datos de tu perfil con la nueva información.',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, guardar',
+      cancelButtonText: 'Cancelar',
+      background: '#212529',
+      color: '#fff'
+    }).then((result) => {
+      
+      if (result.isConfirmed) {
+        const formData = new FormData();
 
-    const formData = new FormData();
+        formData.append('id', this.userId.toString());
+        formData.append('location', form.value.location || null);
+        formData.append('birthDate', form.value.birthDate || null);
+        formData.append('gender', form.value.gender || null);
 
-    formData.append('id', this.userId.toString());
-    formData.append('location', form.value.location || null);
-    formData.append('birthDate', form.value.birthDate || null);
-    formData.append('gender', form.value.gender || null);
+        if (this.fileSelected) {
+          formData.append('avatar', this.fileSelected, this.fileSelected.name);
+        }
 
-    if (this.fileSelected) {
-      formData.append('avatar', this.fileSelected, this.fileSelected.name);
-    }
-
-    this.userService.updateProfile(formData).subscribe({
-      next: (response) => {
-      this.userService.getProfileById(this.userId).subscribe((profileRes: any) => {
-            this.authService.updateUserState(profileRes.data); 
+        this.userService.updateProfile(formData).subscribe({
+          next: (response) => {
+            this.userService.getProfileById(this.userId).subscribe((profileRes: any) => {
+              this.authService.updateUserState(profileRes.data); 
+              
+              Swal.fire({
+                title: "Perfil actualizado",
+                icon: "success",
+                text: `¡Tu perfil se ha actualizado correctamente!`,
+                confirmButtonText: 'OK',
+                background: '#212529',
+                color: '#fff'
+              }).then(() => {
+                this.router.navigate(['/profile/', this.userId]);
+              });
+            });
+          },
+          error: (err) => {
             Swal.fire({
-              title: "Perfil actualizado",
-              icon: "success",
-              text: `The perfil se ha actualizado correctamente!`,
-              confirmButtonText: 'OK'
-            }).then(() => {
-              this.router.navigate(['/profile/', this.userId]);
-            })
-          });
-      },
-      error: (err) => {
-        Swal.fire({
-          title: "Error al actualizar el perfil",
-          icon: "error",
-          text: `Error al actualizar el perfil`,
-          confirmButtonText: "Entendido"
-        })
-        this.cdr.detectChanges();
+              title: "Error al actualizar",
+              text: err.error?.message || `Ocurrió un problema al intentar guardar los cambios.`,
+              icon: "error",
+              confirmButtonText: "Entendido",
+              background: '#212529',
+              color: '#fff'
+            });
+            this.cdr.detectChanges();
+          }
+        });
       }
     });
   }

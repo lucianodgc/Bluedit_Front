@@ -1,0 +1,106 @@
+<div class="container mt-5 card bg-dark text-white border-secondary p-4 shadow-lg">
+    
+    <h1 class="fw-bold text-center mt-2 card-title">Account Settings</h1>
+
+    <form (ngSubmit)="updateUsername(usernameForm)" #usernameForm="ngForm" class="card-body px-5">
+        <h5 class="fw-bold text-white border-bottom border-secondary pb-2 mb-4">Change Username</h5>
+        
+        <div class="row mt-4">
+            <label for="username" class="col-sm-3 col-form-label">New Username</label>
+            <div class="col-sm-6">
+                <input type="text" 
+                       class="form-control" 
+                       id="username" 
+                       name="username" 
+                       required
+                       [ngModel]="authService.currentUser()?.username" 
+                       #username="ngModel">
+                @if (username.invalid && username.touched) {
+                    <small class="text-danger d-block mt-1">El nombre de usuario es obligatorio.</small>
+                }
+            </div>
+        </div>
+
+        <div class="d-md-flex mt-5 justify-content-center">
+            <button type="submit" class="btn btn-primary mb-3" [disabled]="usernameForm.invalid">
+                <span>Update Username</span>
+            </button>
+        </div>
+    </form>
+
+    <form (ngSubmit)="updatePassword(passwordForm)" #passwordForm="ngForm" class="card-body px-5">
+        <h5 class="fw-bold text-white border-bottom border-secondary pb-2 mb-4 mt-2">Change Password</h5>
+        
+        <div class="row mt-4">
+            <label for="currentPassword" class="col-sm-3 col-form-label">Current Password</label>
+            <div class="col-sm-6">
+                <input type="password" 
+                       class="form-control" 
+                       id="currentPassword" 
+                       name="currentPassword" 
+                       required 
+                       ngModel>
+            </div>
+        </div>
+
+        <div class="mt-4 row">
+            <label for="newPassword" class="col-sm-3 col-form-label">New Password</label>
+            <div class="col-sm-6">
+                <input type="password" 
+                       class="form-control" 
+                       id="newPassword" 
+                       name="newPassword" 
+                       required 
+                       minlength="6"
+                       ngModel 
+                       #newPass="ngModel">
+                @if (newPass.invalid && newPass.touched) {
+                    <div class="text-danger mt-1">
+                        @if (newPass.errors?.['required']) { <small>La contraseña es obligatoria.</small> }
+                        @if (newPass.errors?.['minlength']) { <small>La contraseña debe tener al menos 6 caracteres.</small> }
+                    </div>
+                }
+
+                @if (passwordForm.value.newPassword && passwordForm.value.currentPassword && passwordForm.value.newPassword === passwordForm.value.currentPassword) {
+                    <div class="text-danger small mt-1">
+                        La nueva contraseña no puede ser idéntica a la actual.
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="mt-4 row">
+            <label for="confirmPassword" class="col-sm-3 col-form-label">Confirm New Password</label>
+            <div class="col-sm-6">
+                <input type="password" 
+                       class="form-control" 
+                       id="confirmPassword" 
+                       name="confirmPassword" 
+                       required 
+                       ngModel>
+                <div class="text-danger mt-1">
+                    @if (passwordForm.value.newPassword !== passwordForm.value.confirmPassword && passwordForm.value.confirmPassword) { 
+                        <small>Las contraseñas no coinciden.</small> 
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="d-md-flex mt-5 justify-content-center">
+            <button type="submit" class="btn btn-primary mb-3" [disabled]="passwordForm.invalid || passwordForm.value.newPassword !== passwordForm.value.confirmPassword">
+                <span>Update Password</span>
+            </button>
+        </div>
+    </form>
+
+    <div class="card-body px-5">
+        <div class="row mt-4 align-items-center">
+            <div class="col-sm-12 text-md-end mt-3 mt-sm-0">
+                <button type="button" class="btn btn-outline-danger btn-sm px-4" (click)="deleteAccount()">
+                    Delete Account
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>

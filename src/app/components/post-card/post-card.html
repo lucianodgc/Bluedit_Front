@@ -1,7 +1,8 @@
     <div class="card mb-3 shadow-lg border-0 bg-dark text-white " [class.clickable-post-card]="!isDetailView" 
      (click)="!isDetailView && goToPost(post.id)">
     
-    <div class="card-header border-0 small pt-3">
+<div class="card-header border-0 small pt-3 d-flex justify-content-between align-items-center">
+    <div>
         @if (post.username) {
             <a [routerLink]="['/profile', post.userId]" class="text-decoration-none d-inline-flex align-items-center">
                 <img 
@@ -18,6 +19,12 @@
         }
     </div>
 
+    @if (isDetailView && authService.currentUser()?.id === post.userId) {
+        <button class="btn btn-outline-danger btn-sm px-2 py-1" (click)="deletePost(post.id)">
+            🗑️ Eliminar Post
+        </button>
+    }
+</div>
     <div class="card-body py-2">
         <h5 class="card-title fw-bold">{{ post.title }}</h5>
         @if (post.type === 'text') {

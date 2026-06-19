@@ -27,7 +27,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
-      if (error.status === 401 && isMyApi) {
+      if (error.status === 401 && isMyApi && !isShowingAlert) {
         isShowingAlert = true;
         authService.logout();
         Swal.fire({

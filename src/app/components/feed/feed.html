@@ -10,6 +10,12 @@
 
         <hr class="mb-4 mt-4">
 
+        @if (errorMessage()) {
+            <div class="alert alert-danger bg-danger bg-opacity-25 text-danger border-danger text-center mt-4 animate__animated animate__fadeIn">
+                {{ errorMessage() }}
+            </div>
+        }
+
         @if (filter.value == "1") {
             @for (post of listOrderedByDate; track post.id) {
                 <div class="animate__animated animate__backInUp">

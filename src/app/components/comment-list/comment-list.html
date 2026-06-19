@@ -1,43 +1,46 @@
 <div class="mb-4">
-  <textarea 
-    [(ngModel)]="newCommentText" 
-    class="form-control bg-secondary bg-opacity-25 text-white border-secondary" 
-    rows="3" 
-    placeholder="What do you think about this?"></textarea>
-  <button 
-    (click)="onSubmitComment()" 
-    class="btn btn-primary btn-sm mt-2 float-end">
+  <textarea [(ngModel)]="newCommentText" class="form-control bg-secondary bg-opacity-25 text-white border-secondary"
+    rows="3" placeholder="What do you think about this?"></textarea>
+  <button (click)="onSubmitComment()" class="btn btn-primary btn-sm mt-2 float-end">
     Comment
   </button>
   <div class="clearfix"></div>
+
+  @if (errorMessage()) {
+  <div
+    class="alert alert-danger bg-danger bg-opacity-25 text-danger border-danger text-center mt-4 animate__animated animate__fadeIn">
+    {{ errorMessage() }}
+  </div>
+  }
+
 </div>
 
 <hr class="border-secondary opacity-25">
 
 <div class="comments-container mt-3">
   @for (comment of comments(); track comment.id) {
-    <div class="d-flex mb-3 align-items-start">
-      
-      @if (comment.username) {
-        <img [src]="comment | avatarUrl" class="rounded-circle me-2" style="width: 32px; height: 32px; object-fit: cover;">
-      } @else {
-        <div class="rounded-circle me-2 bg-secondary" style="width: 32px; height: 32px;"></div>
-      }
-      
-      <div class="bg-secondary bg-opacity-10 p-2 rounded flex-grow-1 border border-secondary border-opacity-25">
-        <div class="d-flex justify-content-between small text-secondary">
-          @if(comment.username) {
-            <b class="text-white-50">u/{{ comment.username }}</b>
-          } @else {
-            <b class="text-white-50 fst-italic">[User deleted]</b>
-          }
-          <span>{{ comment.createdAt }}</span>
-        </div>
-        
-        <p class="mb-0 mt-1 text-light small">{{ comment.content }}</p>
+  <div class="d-flex mb-3 align-items-start">
+
+    @if (comment.username) {
+    <img [src]="comment | avatarUrl" class="rounded-circle me-2" style="width: 32px; height: 32px; object-fit: cover;">
+    } @else {
+    <div class="rounded-circle me-2 bg-secondary" style="width: 32px; height: 32px;"></div>
+    }
+
+    <div class="bg-secondary bg-opacity-10 p-2 rounded flex-grow-1 border border-secondary border-opacity-25">
+      <div class="d-flex justify-content-between small text-secondary">
+        @if(comment.username) {
+        <b class="text-white-50">u/{{ comment.username }}</b>
+        } @else {
+        <b class="text-white-50 fst-italic">[User deleted]</b>
+        }
+        <span>{{ comment.createdAt }}</span>
       </div>
+
+      <p class="mb-0 mt-1 text-light small">{{ comment.content }}</p>
     </div>
+  </div>
   } @empty {
-    <p class="text-muted text-center small my-4">Nobody has commented yet. Be the first!</p>
+  <p class="text-muted text-center small my-4">Nobody has commented yet. Be the first!</p>
   }
 </div>

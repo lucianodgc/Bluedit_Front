@@ -23,6 +23,8 @@ export class CommentList implements OnInit {
     newCommentText = '';
     commentCount: number = 0; 
 
+    errorMessage = signal<string | null>(null);
+
     ngOnInit() {
         this.loadComments();    
     }
@@ -32,7 +34,10 @@ export class CommentList implements OnInit {
             next: (response) => {
                 this.comments.set(response.data);
             },
-            error: (err) => console.error('Error al cargar comentarios', err)
+            error: (err) => {
+                console.error('Error al cargar comentarios', err);
+                this.errorMessage.set('No se pudieron cargar los comentarios.');
+            }
         });
     }
 
@@ -45,6 +50,8 @@ export class CommentList implements OnInit {
             this.router.navigate(['/login']);
             return;
         }
+
+        this.errorMessage.set(null);
 
         this.commentCount = this.post.commentsCount || 0;
         const previousCommentCount = this.commentCount;
@@ -65,6 +72,7 @@ export class CommentList implements OnInit {
             error: (err) => {
                 console.error('Error al crear comentarios', err);
                 this.post.commentsCount = previousCommentCount;
+                this.errorMessage.set(err.error?.message || 'No se pudo publicar tu comentario.');
             }
         });
     }

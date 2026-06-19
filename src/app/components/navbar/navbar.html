@@ -46,6 +46,9 @@
                         <a class="dropdown-item" [routerLink]="['/profile', user.id]" (click)="toggleMenu()">
                             My Profile
                         </a>
+                        <a class="dropdown-item" [routerLink]="['/account-settings', user.id]" (click)="toggleMenu()">
+                            Account Settings
+                        </a>
                         <button class="dropdown-item text-danger" (click)="logout()">
                             Log Out
                         </button>

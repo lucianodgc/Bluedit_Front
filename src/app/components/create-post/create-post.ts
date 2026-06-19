@@ -3,6 +3,7 @@ import { AuthService, PostService } from '../../services';
 import { Router } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import Swal from 'sweetalert2'
+
 @Component({
   selector: 'app-create-post',
   imports: [FormsModule],
@@ -65,7 +66,7 @@ export class CreatePost {
         error: (err) => {
           Swal.fire({
             title: 'Error',
-            text: 'Ocurrió un error al crear el post.',
+            text: err.error?.message || 'Ocurrió un error al crear el post.',
             icon: 'error',
             showConfirmButton: true
           })

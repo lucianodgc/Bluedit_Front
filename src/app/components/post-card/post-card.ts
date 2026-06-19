@@ -3,8 +3,8 @@ import { Post, VoteRequest } from '../../interfaces';
 import { Router, RouterLink } from '@angular/router';
 import { AvatarPipe } from '../../pipes/avatar-pipe';
 import { environment } from '../../../environments/environment';
-import { VoteService } from '../../services/vote.service';
-import { AuthService } from '../../services';
+import { AuthService, PostService, VoteService } from '../../services';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-post-card',
@@ -16,6 +16,7 @@ export class PostCard implements OnInit {
   @Input() post!: Post;
   @Input() isDetailView: boolean = false;
 
+  private postService = inject(PostService)
   private voteService = inject(VoteService);
   private router = inject(Router);
   authService = inject(AuthService);
@@ -81,5 +82,48 @@ export class PostCard implements OnInit {
 
   goToPost(postId: number): void {
     this.router.navigate(['/post', postId]);
+  }
+
+deletePost(postId: number): void {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Esta acción eliminará la publicación permanentemente.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      background: '#212529',
+      color: '#fff'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.postService.deletePost(postId).subscribe({
+          next: (response) => {
+            Swal.fire({
+              title: '¡Eliminado!',
+              text: 'La publicación ha sido borrada correctamente.',
+              icon: 'success',
+              confirmButtonText: 'Entendido',
+              background: '#212529',
+              color: '#fff'
+            }).then(() => {
+              this.router.navigate(['/feed']);
+            });
+          },
+          error: (err) => {
+            console.error('Error en el servidor al intentar eliminar:', err);
+            Swal.fire({
+              title: 'Error interno',
+              text: err.error?.message || 'Ocurrió un error en el servidor. Inténtalo más tarde.',
+              icon: 'error',
+              background: '#212529',
+              color: '#fff'
+            });
+          }
+        });
+
+      }
+    });
   }
 }

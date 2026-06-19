@@ -1,4 +1,10 @@
 <div class="container mt-4" style="max-width: 750px">
+    @if (errorMessage()) {
+        <div class="alert alert-danger bg-danger bg-opacity-25 text-danger border-danger text-center mt-4 animate__animated animate__fadeIn">
+            {{ errorMessage() }}
+        </div>
+    }
+
     @if(post()) {
         <app-post-card [post]="post()!" [isDetailView]="true"></app-post-card>
 

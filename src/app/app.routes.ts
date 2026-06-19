@@ -9,12 +9,14 @@ import { EditProfile } from './components/edit-profile/edit-profile';
 import { profileGuard } from './guards/profile-guard';
 import { authGuard } from './guards/auth-guard';
 import { guestGuard } from './guards/guest-guard';
+import { AccountSettings } from './components/account-settings/account-settings';
 
 export const routes: Routes = [
     { path: 'feed', component: Feed },
     { path: 'create-post', component: CreatePost, canActivate: [authGuard] },
     { path: 'profile/:id', component: Profile },
     { path: 'edit-profile/:id', component: EditProfile, canActivate: [profileGuard] },
+    { path: 'account-settings/:id', component: AccountSettings, canActivate: [profileGuard] },
     { path: 'login', component: Login, canActivate: [guestGuard] },
     { path: 'signup', component: Register, canActivate: [guestGuard] },
     { path: 'post/:id', component: PostDetail },

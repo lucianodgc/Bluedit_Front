@@ -1,5 +1,5 @@
-import { Component, inject, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { ActivatedRoute, RouterLink} from '@angular/router';
+import { Component, inject, OnInit, ChangeDetectorRef, OnDestroy, signal } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PostCard } from '../post-card/post-card';
 import { ApiResponse, Post, User } from '../../interfaces';
 import { AuthService, CountryService, PostService, UserService } from '../../services';
@@ -16,7 +16,7 @@ import { AsyncPipe } from '@angular/common';
   styleUrl: './profile.scss',
 })
 export class Profile implements OnInit, OnDestroy {
-  private route = inject(ActivatedRoute); 
+  private route = inject(ActivatedRoute);
   private userService = inject(UserService);
   private postService = inject(PostService);
   authService = inject(AuthService);
@@ -26,43 +26,49 @@ export class Profile implements OnInit, OnDestroy {
   user: User | null = null;
   userPosts: Post[] = [];
 
+  errorMessage = signal<string | null>(null);
+
   private paramSub?: Subscription;
 
   ngOnInit() {
     this.paramSub = this.route.paramMap.subscribe(params => {
-        const idUrl = params.get('id');
-        
-        if (idUrl) {
-            const userIdNum = Number(idUrl);
-            this.loadUserData(userIdNum);
-        }
+      const idUrl = params.get('id');
+
+      if (idUrl) {
+        const userIdNum = Number(idUrl);
+        this.loadUserData(userIdNum);
+      }
     });
   }
 
   loadUserData(userId: number) {
-      const currentUserId = this.authService.currentUser()?.id ?? null;
+    const currentUserId = this.authService.currentUser()?.id ?? null;
+    this.errorMessage.set(null);
 
-      this.userService.getProfileById(userId).subscribe({
-        next: (response: ApiResponse) => {
-          this.user = response.data;
-          this.cdr.detectChanges(); 
-        },
-        error: (err) => console.error('Error al cargar usuario', err)
-      });
+    this.userService.getProfileById(userId).subscribe({
+      next: (response: ApiResponse) => {
+        this.user = response.data;
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Error al cargar usuario', err)
+    });
 
-      this.postService.getPostsByUserId(userId, currentUserId).subscribe({
-        next: (response: ApiResponse) => {
-          this.userPosts = response.data;
-          this.cdr.detectChanges();
-        },
-        error: (err) => console.error('Error al cargar posts del usuario', err)
-      });
+    this.postService.getPostsByUserId(userId, currentUserId).subscribe({
+      next: (response: ApiResponse) => {
+        this.userPosts = response.data;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error al cargar posts del usuario', err);
+        this.errorMessage.set(err.error?.message || 'No se pudo cargar el perfil del usuario.');
+      }
+    });
   }
 
   ngOnDestroy() {
-      if (this.paramSub) {
-          this.paramSub.unsubscribe();
-      }
+    if (this.paramSub) {
+      this.paramSub.unsubscribe();
+    }
   }
 
 }

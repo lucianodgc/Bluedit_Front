@@ -39,7 +39,7 @@ export class Register {
           Swal.fire({
             title: "Error",
             icon: "error",
-            text: "Ocurrio un error al intentar registrarte",
+            text: err.error?.message || "Ocurrio un error al intentar registrarte",
             confirmButtonText: "Entendido"
           }).then(() => {
             this.router.navigate(['/register']); 
