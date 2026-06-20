@@ -1,4 +1,4 @@
-    <div class="card mb-3 shadow-lg border-0 bg-dark text-white " [class.clickable-post-card]="!isDetailView" 
+    <div class="card mb-3 shadow-lg border-0 bg-body-tertiary text-body" [class.clickable-post-card]="!isDetailView" 
      (click)="!isDetailView && goToPost(post.id)">
     
 <div class="card-header border-0 small pt-3 d-flex justify-content-between align-items-center">
@@ -14,7 +14,7 @@
         } @else {
             <div class="d-inline-flex align-items-center text-muted">
                 <div class="rounded-circle me-2 bg-secondary" style="width: 28px; height: 28px;"></div>
-                <b class="text-white-50 fst-italic">[User deleted]</b>
+                <b class="text-muted fst-italic">[User deleted]</b>
             </div>
         }
     </div>
@@ -58,21 +58,21 @@
     </div>
 
     <div class="card-footer border-0 bg-transparent pb-3">
-        <span class="badge bg-dark rounded-pill" (click)="$event.stopPropagation()">
-            <button class="btn btn-outline-light btn-sm" 
+        <span class="badge bg-body-secondary text-body rounded-pill" (click)="$event.stopPropagation()">
+            <button class="btn btn-outline-secondary btn-sm" 
             (click)="handleVote('up')" [disabled]="authService.currentUser()?.id === post.userId">↑</button> 
             {{ post.votesCount }} votes
-            <button class="btn btn-outline-light btn-sm" 
+            <button class="btn btn-outline-secondary btn-sm" 
             (click)="handleVote('down')" [disabled]="authService.currentUser()?.id === post.userId">↓</button>
         </span>
 
         @if (!isDetailView) {
-            <a [routerLink]="['/post', post.id]" (click)="$event.stopPropagation()" class="badge bg-dark rounded-pill text-decoration-none text-white p-2">
-                <span class="btn btn-outline-light btn-sm border-0 p-0 me-1">💬</span>
+            <a [routerLink]="['/post', post.id]" (click)="$event.stopPropagation()" class="badge bg-body-secondary text-body rounded-pill text-decoration-none p-2">
+                <span class="btn btn-outline-secondary btn-sm border-0 p-0 me-1">💬</span>
                 {{ post.commentsCount }} comments
             </a>
         } @else {
-            <span class="badge bg-dark rounded-pill text-white p-2">
+            <span class="badge bg-body-secondary text-body rounded-pill p-2">
                 <span class="border-0 p-0 me-1">💬</span>
                 {{ post.commentsCount }} comments
             </span>

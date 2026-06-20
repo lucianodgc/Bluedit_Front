@@ -1,14 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
 
 @use "bootstrap/scss/bootstrap" with (
-  $primary: #ffffff,
   $enable-shadows: true,
-  $body-bg: #020318,
 );
 
 @import 'animate.css';
 
+[data-bs-theme='dark'] {
+    --bs-body-bg: #020318;
+    --bs-body-color: #ffffff;
+    --bs-primary: #ffffff;               
+    --bs-nav-link-color: #ffffff;
+    --bs-nav-tabs-border-color: #ffffff;
+    --bs-border-color: rgba(255, 255, 255, 0.15); 
+}
+
+[data-bs-theme='light'] {
+    --bs-body-bg: #ffffff;
+    --bs-body-color: #020318;
+    --bs-primary: #020318;                
+    --bs-nav-link-color: #020318;
+    --bs-nav-tabs-border-color: #020318;
+    --bs-border-color: rgba(0, 0, 0, 0.15); 
+}
+
 hr {
-  color: #ffffff;
+  color: inherit; 
   margin-top: 0;
 }

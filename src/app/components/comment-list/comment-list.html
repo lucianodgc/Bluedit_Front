@@ -1,5 +1,5 @@
 <div class="mb-4">
-  <textarea [(ngModel)]="newCommentText" class="form-control bg-secondary bg-opacity-25 text-white border-secondary"
+  <textarea [(ngModel)]="newCommentText" class="form-control border-secondary-subtle"
     rows="3" placeholder="What do you think about this?"></textarea>
   <button (click)="onSubmitComment()" class="btn btn-primary btn-sm mt-2 float-end">
     Comment
@@ -28,16 +28,16 @@
     }
 
     <div class="bg-secondary bg-opacity-10 p-2 rounded flex-grow-1 border border-secondary border-opacity-25">
-      <div class="d-flex justify-content-between small text-secondary">
+      <div class="d-flex justify-content-between small text-muted">
         @if(comment.username) {
-        <b class="text-white-50">u/{{ comment.username }}</b>
+        <b class="text-muted">u/{{ comment.username }}</b>
         } @else {
-        <b class="text-white-50 fst-italic">[User deleted]</b>
+        <b class="text-muted fst-italic">[User deleted]</b>
         }
         <span>{{ comment.createdAt }}</span>
       </div>
 
-      <p class="mb-0 mt-1 text-light small">{{ comment.content }}</p>
+      <p class="mb-0 mt-1 text-body small">{{ comment.content }}</p>
     </div>
   </div>
   } @empty {

@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Navbar } from './components/navbar/navbar';
 import { Footer } from './components/footer/footer';
+import { ThemeService } from './services';
 
 @Component({
   selector: 'app-root',
@@ -11,5 +12,6 @@ import { Footer } from './components/footer/footer';
 })
 export class App {
   protected readonly title = signal('Bluedit_Front');
+  private themeService = inject(ThemeService);
 }
   

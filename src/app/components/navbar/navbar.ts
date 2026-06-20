@@ -1,6 +1,6 @@
 import { Component, effect, HostListener, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../services';
+import { AuthService, ThemeService } from '../../services';
 import { AvatarPipe } from '../../pipes/avatar-pipe';
 import Swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 })
 export class Navbar {
   authService = inject(AuthService);
+  themeService = inject(ThemeService);
   private router = inject(Router);
 
   isMenuOpen = signal(false);

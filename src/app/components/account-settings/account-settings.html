@@ -1,9 +1,9 @@
-<div class="container mt-5 card bg-dark text-white border-secondary p-4 shadow-lg">
+<div class="container mt-5 card bg-body-tertiary text-body border-secondary-subtle p-4 shadow-lg">
     
     <h1 class="fw-bold text-center mt-2 card-title">Account Settings</h1>
 
     <form (ngSubmit)="updateUsername(usernameForm)" #usernameForm="ngForm" class="card-body px-5">
-        <h5 class="fw-bold text-white border-bottom border-secondary pb-2 mb-4">Change Username</h5>
+        <h5 class="fw-bold text-body border-bottom border-secondary pb-2 mb-4">Change Username</h5>
         
         <div class="row mt-4">
             <label for="username" class="col-sm-3 col-form-label">New Username</label>
@@ -29,7 +29,7 @@
     </form>
 
     <form (ngSubmit)="updatePassword(passwordForm)" #passwordForm="ngForm" class="card-body px-5">
-        <h5 class="fw-bold text-white border-bottom border-secondary pb-2 mb-4 mt-2">Change Password</h5>
+        <h5 class="fw-bold text-body border-bottom border-secondary pb-2 mb-4 mt-2">Change Password</h5>
         
         <div class="row mt-4">
             <label for="currentPassword" class="col-sm-3 col-form-label">Current Password</label>

@@ -8,7 +8,7 @@
     @if(post()) {
         <app-post-card [post]="post()!" [isDetailView]="true"></app-post-card>
 
-        <div class="mt-4 p-3 bg-dark rounded shadow-lg text-white">
+        <div class="mt-4 p-3 bg-body-tertiary rounded shadow-lg text-body">
             <h3 class="h5 fw-bold mb-4">Comments</h3>
 
             <app-comment-list [post]="post()!"></app-comment-list>

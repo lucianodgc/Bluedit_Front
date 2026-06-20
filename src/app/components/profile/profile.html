@@ -1,4 +1,4 @@
-<div class="container mt-4 mb-5 card bg-dark text-white border-secondary p-4 animate__animated animate__zoomIn">
+<div class="container mt-4 mb-5 card bg-body-tertiary text-body border-secondary-subtle p-4 animate__animated animate__zoomIn">
 
     @if (errorMessage()) {
         <div class="alert alert-danger bg-danger bg-opacity-25 text-danger border-danger text-center mt-4 animate__animated animate__fadeIn">
@@ -22,8 +22,8 @@
         </div>
         
         <div class="ms-3 mt-1">
-            <h2 class="fw-bold text-white mb-1">{{ user?.username }}</h2>
-            <p class="fw-bold text-white-50 mb-0">u/{{ user?.username }}</p>
+            <h2 class="fw-bold text-body mb-1">{{ user?.username }}</h2>
+            <p class="fw-bold text-muted mb-0">u/{{ user?.username }}</p>
         </div>
 
         <div class="ms-auto text-end">
