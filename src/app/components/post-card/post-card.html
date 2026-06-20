@@ -1,81 +1,77 @@
-    <div class="card mb-3 shadow-lg border-0 bg-body-tertiary text-body" [class.clickable-post-card]="!isDetailView" 
-     (click)="!isDetailView && goToPost(post.id)">
-    
-<div class="card-header border-0 small pt-3 d-flex justify-content-between align-items-center">
-    <div>
-        @if (post.username) {
+<div class="card mb-3 shadow-lg border-0 bg-body-tertiary text-body" [class.clickable-post-card]="!isDetailView"
+    (click)="!isDetailView && goToPost(post.id)">
+
+    <div class="card-header border-0 small pt-3 d-flex justify-content-between align-items-center">
+        <div>
+            @if (post.username) {
             <a [routerLink]="['/profile', post.userId]" class="text-decoration-none d-inline-flex align-items-center">
-                <img 
-                [src]="post | avatarUrl" 
-                class="rounded-circle me-2 border border-secondary border-opacity-50"
-                style="width: 28px; height: 28px; object-fit: cover;">
+                <img [src]="post | avatarUrl" class="rounded-circle me-2 border border-secondary border-opacity-50"
+                    style="width: 28px; height: 28px; object-fit: cover;">
                 <b>u/{{ post.username }}</b>
             </a>
-        } @else {
+            } @else {
             <div class="d-inline-flex align-items-center text-muted">
                 <div class="rounded-circle me-2 bg-secondary" style="width: 28px; height: 28px;"></div>
                 <b class="text-muted fst-italic">[User deleted]</b>
             </div>
-        }
-    </div>
+            }
+        </div>
 
-    @if (isDetailView && authService.currentUser()?.id === post.userId) {
+        @if (isDetailView && authService.currentUser()?.id === post.userId && authService.currentUser()?.id) {
         <button class="btn btn-outline-danger btn-sm px-2 py-1" (click)="deletePost(post.id)">
             🗑️ Eliminar Post
         </button>
-    }
-</div>
+        }
+    </div>
     <div class="card-body py-2">
         <h5 class="card-title fw-bold">{{ post.title }}</h5>
         @if (post.type === 'text') {
-            <p class="card-text text-secondary">{{ post.content }}</p>
+        <p class="card-text text-secondary">{{ post.content }}</p>
         }
         @else if (post.type === 'multimedia') {
-            <div class="media-container mt-4" (click)="$event.stopPropagation()">
-                @if (isVideo(post.content)) {
-                    <video [src]="serverUrl + post.content" 
-                        controls 
-                        class="img-fluid rounded w-100 bg-black" 
-                        style="max-height: 450px;">
-                    </video>
-                } @else {
-                    <div class="media-container mt-4" style="cursor: zoom-in;" (click)="$event.stopPropagation(); toggleMedia()">
-                        <img [src]="serverUrl + post.content" 
-                            class="img-fluid rounded w-100" 
-                            alt="Post multimedia" 
-                            style="max-height: 500px; object-fit: contain;">
-                    </div>
-                }
+        <div class="media-container mt-4" (click)="$event.stopPropagation()">
+            @if (isVideo(post.content)) {
+            <video [src]="serverUrl + post.content" controls class="img-fluid rounded w-100 bg-black"
+                style="max-height: 450px;">
+            </video>
+            } @else {
+            <div class="media-container mt-4" style="cursor: zoom-in;"
+                (click)="$event.stopPropagation(); toggleMedia()">
+                <img [src]="serverUrl + post.content" class="img-fluid rounded w-100" alt="Post multimedia"
+                    style="max-height: 500px; object-fit: contain;">
+            </div>
+            }
         </div>
         }
 
         @if (isMediaExpanded) {
-            <div class="fullscreen-overlay" (click)="toggleMedia()">
-                <button class="btn btn-dark position-absolute top-0 end-0 m-3 rounded-circle text-white">𐄂</button>
-                <img [src]="serverUrl + post.content" class="fullscreen-media" (click)="$event.stopPropagation()">
-            </div>
+        <div class="fullscreen-overlay" (click)="toggleMedia()">
+            <button class="btn btn-dark position-absolute top-0 end-0 m-3 rounded-circle text-white">𐄂</button>
+            <img [src]="serverUrl + post.content" class="fullscreen-media" (click)="$event.stopPropagation()">
+        </div>
         }
     </div>
 
     <div class="card-footer border-0 bg-transparent pb-3">
         <span class="badge bg-body-secondary text-body rounded-pill" (click)="$event.stopPropagation()">
-            <button class="btn btn-outline-secondary btn-sm" 
-            (click)="handleVote('up')" [disabled]="authService.currentUser()?.id === post.userId">↑</button> 
+            <button class="btn btn-outline-secondary btn-sm" (click)="handleVote('up')"
+                [disabled]="authService.currentUser()?.id === post.userId">↑</button>
             {{ post.votesCount }} votes
-            <button class="btn btn-outline-secondary btn-sm" 
-            (click)="handleVote('down')" [disabled]="authService.currentUser()?.id === post.userId">↓</button>
+            <button class="btn btn-outline-secondary btn-sm" (click)="handleVote('down')"
+                [disabled]="authService.currentUser()?.id === post.userId">↓</button>
         </span>
 
         @if (!isDetailView) {
-            <a [routerLink]="['/post', post.id]" (click)="$event.stopPropagation()" class="badge bg-body-secondary text-body rounded-pill text-decoration-none p-2">
-                <span class="btn btn-outline-secondary btn-sm border-0 p-0 me-1">💬</span>
-                {{ post.commentsCount }} comments
-            </a>
+        <a [routerLink]="['/post', post.id]" (click)="$event.stopPropagation()"
+            class="badge bg-body-secondary text-body rounded-pill text-decoration-none p-2">
+            <span class="btn btn-outline-secondary btn-sm border-0 p-0 me-1">💬</span>
+            {{ post.commentsCount }} comments
+        </a>
         } @else {
-            <span class="badge bg-body-secondary text-body rounded-pill p-2">
-                <span class="border-0 p-0 me-1">💬</span>
-                {{ post.commentsCount }} comments
-            </span>
+        <span class="badge bg-body-secondary text-body rounded-pill p-2">
+            <span class="border-0 p-0 me-1">💬</span>
+            {{ post.commentsCount }} comments
+        </span>
         }
     </div>
 </div>
