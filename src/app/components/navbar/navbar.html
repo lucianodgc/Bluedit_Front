@@ -14,8 +14,31 @@
     }
 
     @if (authService.currentUser(); as user) {
-    <div class="search-bar" [class.animate__animated]="shouldAnimate()" [class.animate__backInRight]="shouldAnimate()">
-        <input type="text" class="form-control" placeholder="Search...">
+    <div class="search-bar position-relative" [class.animate__animated]="shouldAnimate()" [class.animate__backInRight]="shouldAnimate()">
+        <input 
+            type="text" 
+            #searchBox
+            (input)="onTyping(searchBox.value)"
+            (focus)="onFocus(searchBox.value)"
+            (keyup.enter)="onSearch(searchBox.value)" 
+            class="form-control" 
+            placeholder="Search...">
+
+        @if (showRecommendations() && recommendations().length > 0) {
+            <div class="dropdown-menu show w-100 mt-1 shadow-sm" style="position: absolute; left: 0; z-index: 1000; border-radius: 1rem; overflow: hidden;">
+                @for (post of recommendations(); track post.id) {
+                    <a class="dropdown-item d-flex align-items-center py-2 border-bottom" 
+                       [routerLink]="['/post', post.id]"
+                       (click)="clearSearch(searchBox)"
+                       style="cursor: pointer;">
+                        <div>
+                            <div class="fw-bold text-truncate text-wrap" style="max-width: 300px;">{{ post.title }}</div>
+                            <small class="text-muted">u/{{ post.username }}</small>
+                        </div>
+                    </a>
+                }
+            </div>
+        }
     </div>
     }
 

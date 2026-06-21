@@ -19,14 +19,24 @@ export class PostService {
     return this.http.delete<ApiResponse>(`${this.url}/delete.php?id=${postId}`);
   }
 
-  getPosts(currentUserId: number | null): Observable<ApiResponse> {
-    let url = `${this.url}/get_all.php`;
-  
-    if (currentUserId) {
-      url += `?currentUserId=${currentUserId}`;
-    }
-    return this.http.get<ApiResponse>(url);
+  getPosts(currentUserId: number | null, query?: string | null): Observable<ApiResponse> {
+  let url = `${this.url}/get_all.php`;
+  const params: string[] = [];
+
+  if (currentUserId) {
+    params.push(`currentUserId=${currentUserId}`);
   }
+  if (query) {
+    params.push(`q=${encodeURIComponent(query)}`);
+  }
+
+  if (params.length > 0) {
+    url += `?${params.join('&')}`;
+  }
+  
+  return this.http.get<ApiResponse>(url);
+}
+
 
   getPostsByUserId(userId: number, currentUserId: number | null): Observable<ApiResponse> {
     let url = `${this.url}/get_all.php?userId=${userId}`;

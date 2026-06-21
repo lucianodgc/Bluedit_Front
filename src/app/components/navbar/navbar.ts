@@ -1,9 +1,11 @@
-import { Component, effect, HostListener, inject, signal } from '@angular/core';
+import { Component, HostListener, inject, signal, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService, ThemeService } from '../../services';
+import { AuthService, ThemeService, PostService } from '../../services';
 import { AvatarPipe } from '../../pipes/avatar-pipe';
 import Swal from 'sweetalert2';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Post } from '../../interfaces';
 
 @Component({
   selector: 'app-navbar',
@@ -11,14 +13,22 @@ import { Subscription } from 'rxjs';
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss'
 })
-export class Navbar {
+export class Navbar implements OnInit, OnDestroy {
   authService = inject(AuthService);
   themeService = inject(ThemeService);
+  private postService = inject(PostService);
   private router = inject(Router);
 
   isMenuOpen = signal(false);
   shouldAnimate = signal(false); 
+  
+  // Señales y subjects para las sugerencias de búsqueda
+  recommendations = signal<Post[]>([]);
+  showRecommendations = signal(false);
+  private searchQuery$ = new Subject<string>();
+  
   private userSub?: Subscription;
+  private searchSub?: Subscription;
   
   ngOnInit() {
     this.userSub = this.authService.currentUser$.subscribe(user => {
@@ -27,6 +37,59 @@ export class Navbar {
         setTimeout(() => this.shouldAnimate.set(false), 1000);
       }
     });
+
+    // Suscripción reactiva para recomendaciones con debounce de 300ms
+    this.searchSub = this.searchQuery$.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(query => {
+        if (!query.trim()) {
+          return of({ data: [] });
+        }
+        const currentUserId = this.authService.currentUser()?.id ?? null;
+        return this.postService.getPosts(currentUserId, query);
+      })
+    ).subscribe({
+      next: (response: any) => {
+        const results = response.data || [];
+        this.recommendations.set(results.slice(0, 5)); // Tomamos un máximo de 5 sugerencias
+        this.showRecommendations.set(results.length > 0);
+      },
+      error: (err) => {
+        console.error('Error al obtener sugerencias', err);
+        this.recommendations.set([]);
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.userSub) this.userSub.unsubscribe();
+    if (this.searchSub) this.searchSub.unsubscribe();
+  }
+
+  onTyping(query: string) {
+    this.searchQuery$.next(query);
+  }
+
+  onFocus(query: string) {
+    if (query.trim() && this.recommendations().length > 0) {
+      this.showRecommendations.set(true);
+    }
+  }
+
+  clearSearch(searchBox: HTMLInputElement) {
+    searchBox.value = '';
+    this.recommendations.set([]);
+    this.showRecommendations.set(false);
+  }
+
+  onSearch(query: string) {
+    this.showRecommendations.set(false);
+    if (query.trim()) {
+      this.router.navigate(['/feed'], { queryParams: { q: query } });
+    } else {
+      this.router.navigate(['/feed']);
+    }
   }
 
   toggleMenu() {
@@ -37,6 +100,9 @@ export class Navbar {
   clickout(event: any) {
     if (!event.target.closest('.profile-container')) {
       this.isMenuOpen.set(false);
+    }
+    if (!event.target.closest('.search-bar')) {
+      this.showRecommendations.set(false);
     }
   }
 
