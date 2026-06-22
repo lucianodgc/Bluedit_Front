@@ -22,7 +22,8 @@
   <div class="d-flex mb-3 align-items-start">
 
     @if (comment.username) {
-    <img [src]="comment | avatarUrl" class="rounded-circle me-2" style="width: 32px; height: 32px; object-fit: cover;">
+    <img [src]="comment | avatarUrl" (error)="$any($event.target).src = environment.avatarUrl + comment?.username"
+      class="rounded-circle me-2" style="width: 32px; height: 32px; object-fit: cover;">
     } @else {
     <div class="rounded-circle me-2 bg-secondary" style="width: 32px; height: 32px;"></div>
     }

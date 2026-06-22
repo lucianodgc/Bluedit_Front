@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ChangeDetectorRef, OnDestroy, signal } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PostCard } from '../post-card/post-card';
 import { ApiResponse, Post, User } from '../../interfaces';
@@ -7,26 +7,25 @@ import { Subscription } from 'rxjs';
 import { AvatarPipe } from '../../pipes/avatar-pipe';
 import { CountryNamePipe } from '../../pipes/country-name-pipe';
 import { AsyncPipe } from '@angular/common';
-
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-profile',
   imports: [PostCard, RouterLink, AvatarPipe, CountryNamePipe, AsyncPipe],
   templateUrl: './profile.html',
-  styleUrl: './profile.scss',
 })
 export class Profile implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private userService = inject(UserService);
   private postService = inject(PostService);
-  authService = inject(AuthService);
-  private cdr = inject(ChangeDetectorRef);
+  protected authService = inject(AuthService);
   public countryService = inject(CountryService);
+  protected environment = environment;
 
-  user: User | null = null;
-  userPosts: Post[] = [];
+  protected user = signal<User | null>(null);
+  protected userPosts = signal<Post[]>([]);
 
-  errorMessage = signal<string | null>(null);
+  protected errorMessage = signal<string | null>(null);
 
   private paramSub?: Subscription;
 
@@ -47,16 +46,14 @@ export class Profile implements OnInit, OnDestroy {
 
     this.userService.getProfileById(userId).subscribe({
       next: (response: ApiResponse) => {
-        this.user = response.data;
-        this.cdr.detectChanges();
+        this.user.set(response.data);
       },
       error: (err) => console.error('Error al cargar usuario', err)
     });
 
     this.postService.getPostsByUserId(userId, currentUserId).subscribe({
       next: (response: ApiResponse) => {
-        this.userPosts = response.data;
-        this.cdr.detectChanges();
+        this.userPosts.set(response.data);
       },
       error: (err) => {
         console.error('Error al cargar posts del usuario', err);
@@ -70,5 +67,4 @@ export class Profile implements OnInit, OnDestroy {
       this.paramSub.unsubscribe();
     }
   }
-
 }

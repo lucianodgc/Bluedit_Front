@@ -5,7 +5,8 @@
         <div>
             @if (post.username) {
             <a [routerLink]="['/profile', post.userId]" class="text-decoration-none d-inline-flex align-items-center">
-                <img [src]="post | avatarUrl" class="rounded-circle me-2 border border-secondary border-opacity-50"
+                <img [src]="post | avatarUrl" (error)="$any($event.target).src = environment.avatarUrl + post.username"
+                    class="rounded-circle me-2 border border-secondary border-opacity-50"
                     style="width: 28px; height: 28px; object-fit: cover;">
                 <b>u/{{ post.username }}</b>
             </a>

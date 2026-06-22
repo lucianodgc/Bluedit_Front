@@ -8,16 +8,15 @@ import Swal from 'sweetalert2'
   selector: 'app-create-post',
   imports: [FormsModule],
   templateUrl: './create-post.html',
-  styleUrl: './create-post.scss',
 })
 export class CreatePost {
   private postService = inject(PostService);
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  error: string = '';
-  selectedType: 'text' | 'multimedia' = 'text';
-  fileSelected: File | null = null;
+  protected error: string = '';
+  protected selectedType: 'text' | 'multimedia' = 'text';
+  private fileSelected: File | null = null;
 
   setType(type: 'text' | 'multimedia', form: NgForm) {
     this.selectedType = type;
@@ -25,7 +24,7 @@ export class CreatePost {
     this.fileSelected = null;
   }
 
- onFileSelected(event: any) {
+  onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
       this.fileSelected = file;

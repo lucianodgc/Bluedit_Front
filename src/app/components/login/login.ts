@@ -6,17 +6,15 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
   imports: [FormsModule],
   templateUrl: './login.html',
-  styleUrl: './login.scss'
 })
 export class Login {
-  
+
   private authService = inject(AuthService);
   private router = inject(Router);
-  
-  error: string = '';
+
+  protected error: string = '';
 
   login(form: NgForm) {
     if (form.valid) {
@@ -31,7 +29,7 @@ export class Login {
             text: `Has iniciado correctamente, bienvenido nuevamente ${username}!`,
             confirmButtonText: "OK"
           }).then(() => {
-            this.router.navigate(['/']); 
+            this.router.navigate(['/']);
           })
         },
         error: (err) => {
@@ -41,7 +39,7 @@ export class Login {
             text: err.error?.message || "Ocurrio un error al intentar loguearte",
             confirmButtonText: "Entendido"
           }).then(() => {
-            this.router.navigate(['/login']); 
+            this.router.navigate(['/login']);
           })
         }
       });

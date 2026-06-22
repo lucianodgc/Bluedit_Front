@@ -5,7 +5,6 @@ import { environment } from '../../../environments/environment';
   selector: 'app-footer',
   imports: [],
   templateUrl: './footer.html',
-  styleUrl: './footer.scss',
 })
 export class Footer {
   appVersion: string = environment.version;

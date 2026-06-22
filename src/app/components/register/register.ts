@@ -8,14 +8,13 @@ import Swal from 'sweetalert2';
   selector: 'app-register',
   imports: [FormsModule],
   templateUrl: './register.html',
-  styleUrl: './register.scss',
 })
 export class Register {
   private userService = inject(UserService);
   private router = inject(Router);
   private authService = inject(AuthService);
 
-  error: string = '';
+  protected error: string = '';
 
   register(form: NgForm) {
     if (form.valid) {
@@ -42,7 +41,7 @@ export class Register {
             text: err.error?.message || "Ocurrio un error al intentar registrarte",
             confirmButtonText: "Entendido"
           }).then(() => {
-            this.router.navigate(['/register']); 
+            this.router.navigate(['/register']);
           })
         }
       });

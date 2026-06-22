@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, inject, Input, OnInit, Output, signal } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output, signal } from '@angular/core';
 import { Comment, Post } from '../../interfaces';
 import { FormsModule } from '@angular/forms';
 import { AuthService, CommentService } from '../../services';
@@ -6,26 +6,27 @@ import { CommentRequest } from '../../interfaces/comment-request';
 import { Router } from '@angular/router';
 import { AvatarPipe } from '../../pipes/avatar-pipe';
 import Swal from 'sweetalert2'
+import { environment } from '../../../environments/environment';
 
 @Component({
     selector: 'app-comment-list',
     imports: [FormsModule, AvatarPipe],
     templateUrl: './comment-list.html',
-    styleUrl: './comment-list.scss',
 })
 export class CommentList implements OnInit {
     @Input() post!: Post;
     @Output() commentsCountChange = new EventEmitter<number>();
 
-    authService = inject(AuthService);
+    protected authService = inject(AuthService);
     private commentService = inject(CommentService);
     private router = inject(Router);
+    protected environment = environment;
 
-    comments = signal<Comment[]>([]);
-    newCommentText = '';
-    commentCount: number = 0;
+    protected comments = signal<Comment[]>([]);
+    protected newCommentText = '';
+    private commentCount: number = 0;
 
-    errorMessage = signal<string | null>(null);
+    protected errorMessage = signal<string | null>(null);
 
     ngOnInit() {
         this.loadComments();

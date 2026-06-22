@@ -2,44 +2,44 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
 
-        <select class=" animate__animated animate__zoomIn form-select w-auto" aria-label="Filter posts" [ngModel]="'1'" #filter="ngModel">
-            <option disabled>Sort by</option>
-            <option value="1">Most recent</option>
-            <option value="2">Most voted</option>
-        </select>
+            <select class=" animate__animated animate__zoomIn form-select w-auto" aria-label="Filter posts"
+                [ngModel]="'1'" #filter="ngModel">
+                <option disabled>Sort by</option>
+                <option value="1">Most recent</option>
+                <option value="2">Most voted</option>
+            </select>
 
-        <hr class="mb-4 mt-4">
+            <hr class="mb-4 mt-4">
 
-        @if (errorMessage()) {
-            <div class="alert alert-danger bg-danger bg-opacity-25 text-danger border-danger text-center mt-4 animate__animated animate__fadeIn">
+            @if (errorMessage()) {
+            <div
+                class="alert alert-danger bg-danger bg-opacity-25 text-danger border-danger text-center mt-4 animate__animated animate__fadeIn">
                 {{ errorMessage() }}
             </div>
-        }
+            }
 
-        @if (filter.value == "1") {
-            @for (post of listOrderedByDate; track post.id) {
-                <div class="animate__animated animate__backInUp">
-                    <app-post-card 
-                    [post]="post">
-                    </app-post-card>
-                </div>
-                <div class="animate__animated animate__zoomIn">
-                    <hr class="mb-4 mt-4">
-                </div>
+            @if (filter.value == "1") {
+            @for (post of listOrderedByDate(); track post.id) {
+            <div class="animate__animated animate__backInUp">
+                <app-post-card [post]="post">
+                </app-post-card>
+            </div>
+            <div class="animate__animated animate__zoomIn">
+                <hr class="mb-4 mt-4">
+            </div>
             }
-        }
-        @if (filter.value == "2") {
-            @for (post of listOrderedByVotes; track post.id) {
-                <div class="animate__animated animate__backInUp">
-                    <app-post-card 
-                    [post]="post">
-                    </app-post-card>
-                </div>
-                <div class="animate__animated animate__zoomIn">
-                    <hr class="mb-4 mt-4">
-                </div>
             }
-        }
+            @if (filter.value == "2") {
+            @for (post of listOrderedByVotes(); track post.id) {
+            <div class="animate__animated animate__backInUp">
+                <app-post-card [post]="post">
+                </app-post-card>
+            </div>
+            <div class="animate__animated animate__zoomIn">
+                <hr class="mb-4 mt-4">
+            </div>
+            }
+            }
 
         </div>
     </div>

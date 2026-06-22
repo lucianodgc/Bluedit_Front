@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { Subscription, Subject, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Post } from '../../interfaces';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-navbar',
@@ -14,22 +15,22 @@ import { Post } from '../../interfaces';
   styleUrl: './navbar.scss'
 })
 export class Navbar implements OnInit, OnDestroy {
-  authService = inject(AuthService);
-  themeService = inject(ThemeService);
+  protected authService = inject(AuthService);
+  protected themeService = inject(ThemeService);
   private postService = inject(PostService);
   private router = inject(Router);
+  protected environment = environment
 
-  isMenuOpen = signal(false);
-  shouldAnimate = signal(false); 
-  
-  // Señales y subjects para las sugerencias de búsqueda
-  recommendations = signal<Post[]>([]);
-  showRecommendations = signal(false);
+  protected isMenuOpen = signal(false);
+  protected shouldAnimate = signal(false);
+
+  protected recommendations = signal<Post[]>([]);
+  protected showRecommendations = signal(false);
   private searchQuery$ = new Subject<string>();
-  
+
   private userSub?: Subscription;
   private searchSub?: Subscription;
-  
+
   ngOnInit() {
     this.userSub = this.authService.currentUser$.subscribe(user => {
       if (user) {
@@ -38,7 +39,6 @@ export class Navbar implements OnInit, OnDestroy {
       }
     });
 
-    // Suscripción reactiva para recomendaciones con debounce de 300ms
     this.searchSub = this.searchQuery$.pipe(
       debounceTime(300),
       distinctUntilChanged(),
@@ -52,7 +52,7 @@ export class Navbar implements OnInit, OnDestroy {
     ).subscribe({
       next: (response: any) => {
         const results = response.data || [];
-        this.recommendations.set(results.slice(0, 5)); // Tomamos un máximo de 5 sugerencias
+        this.recommendations.set(results.slice(0, 5));
         this.showRecommendations.set(results.length > 0);
       },
       error: (err) => {
@@ -116,7 +116,7 @@ export class Navbar implements OnInit, OnDestroy {
       text: `Has cerrado correctamente la sesion, vuelve pronto ${username}!`,
       confirmButtonText: "OK"
     }).then(() => {
-      this.router.navigate(['/login']); 
+      this.router.navigate(['/login']);
     })
   }
 }

@@ -10,16 +10,15 @@ import { Subscription } from 'rxjs';
   selector: 'app-post-detail',
   imports: [PostCard, CommentList],
   templateUrl: './post-detail.html',
-  styleUrl: './post-detail.scss',
 })
 export class PostDetail implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private postService = inject(PostService);
   private authService = inject(AuthService);
 
-  post = signal<Post | null>(null);
+  protected post = signal<Post | null>(null);
 
-  errorMessage = signal<string | null>(null);
+  protected errorMessage = signal<string | null>(null);
 
   private paramSub?: Subscription;
 

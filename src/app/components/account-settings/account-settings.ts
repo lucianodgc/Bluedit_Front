@@ -9,15 +9,14 @@ import { AuthService, UserService } from '../../services';
   selector: 'app-account-settings',
   imports: [FormsModule],
   templateUrl: './account-settings.html',
-  styleUrl: './account-settings.scss',
 })
 export class AccountSettings implements OnInit, OnDestroy {
   private userService = inject(UserService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  authService = inject(AuthService);
+  protected authService = inject(AuthService);
 
-  userId: number = 0;
+  private userId: number = 0;
   private paramSub?: Subscription;
 
   ngOnInit() {

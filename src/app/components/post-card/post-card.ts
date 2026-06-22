@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
-import { Post, VoteRequest } from '../../interfaces'; 
+import { Post, VoteRequest } from '../../interfaces';
 import { Router, RouterLink } from '@angular/router';
 import { AvatarPipe } from '../../pipes/avatar-pipe';
 import { environment } from '../../../environments/environment';
@@ -19,23 +19,24 @@ export class PostCard implements OnInit {
   private postService = inject(PostService)
   private voteService = inject(VoteService);
   private router = inject(Router);
-  authService = inject(AuthService);
+  protected environment = environment
+  protected authService = inject(AuthService);
 
   readonly serverUrl = environment.serverUrl;
-  voteCount: number = 0; 
-  userVote: 'up' | 'down' | null = null;
-  isMediaExpanded: boolean = false;
+  protected voteCount: number = 0;
+  protected userVote: 'up' | 'down' | null = null;
+  protected isMediaExpanded: boolean = false;
 
 
   ngOnInit() {
     this.voteCount = this.post.votesCount || 0;
-    
-    this.userVote = this.post.userLoggedVote === 1 ? 'up' : 
-                    this.post.userLoggedVote === -1 ? 'down' : null;
+
+    this.userVote = this.post.userLoggedVote === 1 ? 'up' :
+      this.post.userLoggedVote === -1 ? 'down' : null;
   }
 
   handleVote(type: 'up' | 'down') {
-    const currentUserId = this.authService.currentUser()?.id; 
+    const currentUserId = this.authService.currentUser()?.id;
     if (!currentUserId) {
       this.router.navigate(['/login']);
       return;
@@ -61,7 +62,7 @@ export class PostCard implements OnInit {
     };
 
     this.voteService.votePost(voteData).subscribe({
-      next: (response) => {},
+      next: (response) => { },
       error: (err) => {
         console.error('Error en el servidor, revirtiendo voto:', err);
         this.userVote = previousUserVote;
@@ -84,7 +85,7 @@ export class PostCard implements OnInit {
     this.router.navigate(['/post', postId]);
   }
 
-deletePost(postId: number): void {
+  deletePost(postId: number): void {
     Swal.fire({
       title: '¿Estás seguro?',
       text: 'Esta acción eliminará la publicación permanentemente.',
