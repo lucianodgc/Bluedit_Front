@@ -1,17 +1,18 @@
 <div class="container mt-4" style="max-width: 750px">
     @if (errorMessage()) {
-        <div class="alert alert-danger bg-danger bg-opacity-25 text-danger border-danger text-center mt-4 animate__animated animate__fadeIn">
-            {{ errorMessage() }}
-        </div>
+    <div
+        class="alert alert-danger bg-danger bg-opacity-25 text-danger border-danger text-center mt-4 animate__animated animate__fadeIn">
+        {{ errorMessage() }}
+    </div>
     }
 
     @if(post()) {
-        <app-post-card [post]="post()!" [isDetailView]="true"></app-post-card>
+    <app-post-card [post]="post()!" [isDetailView]="true"></app-post-card>
 
-        <div class="mt-4 p-3 bg-body-tertiary rounded shadow-lg text-body">
-            <h3 class="h5 fw-bold mb-4">Comments</h3>
+    <div class="mt-4 p-3 bg-body-tertiary rounded shadow-lg text-body">
+        <h3 class="h5 fw-bold mb-4">Comments</h3>
 
-            <app-comment-list [post]="post()!"></app-comment-list>
-        </div>
+        <app-comment-list [post]="post()!" (commentsCountChange)="updateCommentsCount($any($event))"></app-comment-list>
+    </div>
     }
 </div>

@@ -16,6 +16,10 @@ export class CommentService {
         return this.http.post<ApiResponse>(`${this.url}/create.php`, data);
     }
 
+    deleteComment(commentId: number): Observable<ApiResponse> {
+        return this.http.delete<ApiResponse>(`${this.url}/delete.php?id=${commentId}`);
+    }
+
     getComments(currentUserId: number | null): Observable<ApiResponse> {
         let url = `${this.url}/get_all.php`
 
@@ -27,9 +31,5 @@ export class CommentService {
 
     getCommentsByPostId(postId: number): Observable<ApiResponse> {
         return this.http.get<ApiResponse>(`${this.url}/get_by_post.php?postId=${postId}`);
-    }
-
-    deleteComment(commentId: number): Observable<ApiResponse> {
-        return this.http.delete<ApiResponse>(`${this.url}/delete.php?commentId=${commentId}`);
     }
 }

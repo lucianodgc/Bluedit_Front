@@ -19,7 +19,7 @@
 
         @if (isDetailView && authService.currentUser()?.id === post.userId && authService.currentUser()?.id) {
         <button class="btn btn-outline-danger btn-sm px-2 py-1" (click)="deletePost(post.id)">
-            🗑️ Eliminar Post
+            🗑️ Delete Post
         </button>
         }
     </div>

@@ -54,4 +54,13 @@ export class PostDetail implements OnInit, OnDestroy {
       this.paramSub.unsubscribe();
     }
   }
+
+  updateCommentsCount(count: number) {
+    this.post.update(currentPost => {
+      if (currentPost) {
+        return { ...currentPost, commentsCount: count };
+      }
+      return null;
+    });
+  }
 }

@@ -1,6 +1,6 @@
 <div class="mb-4">
-  <textarea [(ngModel)]="newCommentText" class="form-control border-secondary-subtle"
-    rows="3" placeholder="What do you think about this?"></textarea>
+  <textarea [(ngModel)]="newCommentText" class="form-control border-secondary-subtle" rows="3"
+    placeholder="What do you think about this?"></textarea>
   <button (click)="onSubmitComment()" class="btn btn-primary btn-sm mt-2 float-end">
     Comment
   </button>
@@ -27,8 +27,9 @@
     <div class="rounded-circle me-2 bg-secondary" style="width: 32px; height: 32px;"></div>
     }
 
-    <div class="bg-secondary bg-opacity-10 p-2 rounded flex-grow-1 border border-secondary border-opacity-25">
-      <div class="d-flex justify-content-between small text-muted">
+    <div
+      class="bg-secondary bg-opacity-10 p-2 rounded flex-grow-1 border border-secondary border-opacity-25 d-flex flex-column">
+      <div class="d-flex justify-content-between small text-muted mb-1">
         @if(comment.username) {
         <b class="text-muted">u/{{ comment.username }}</b>
         } @else {
@@ -37,7 +38,16 @@
         <span>{{ comment.createdAt }}</span>
       </div>
 
-      <p class="mb-0 mt-1 text-body small">{{ comment.content }}</p>
+      <p class="mb-0 text-body small flex-grow-1">{{ comment.content }}</p>
+
+      @if (authService.currentUser()?.id === comment.userId && authService.currentUser()?.id) {
+      <div class="d-flex justify-content-end mt-1">
+        <button class="btn btn-outline-danger p-0 px-1 border-0"
+          style="font-size: 0.68rem; line-height: 1.2; opacity: 0.7;" (click)="deleteComment(comment.id)">
+          🗑️ Delete Comment
+        </button>
+      </div>
+      }
     </div>
   </div>
   } @empty {
