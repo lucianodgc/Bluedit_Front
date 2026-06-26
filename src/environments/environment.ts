@@ -1,7 +1,7 @@
 export const environment = {
-    apiUrl: 'http://192.168.1.127/Inicio/Bluedit/api',
-    avatarUrl: 'https://api.dicebear.com/7.x/initials/svg?seed=',
-    serverUrl: 'http://192.168.1.127/Inicio/Bluedit/',
+    apiUrl: 'http://bluedit.tec.cinco/api',
+    avatarUrl: 'https://api.dicebear.com/9.x/initials/svg?seed=',
+    serverUrl: 'http://bluedit.tec.cinco/',
     version: "1.0.0",
     production: true
 };
