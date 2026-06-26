@@ -1,59 +1,18 @@
-# BlueditFront
+Bluedit - Laboratorio RIA 2026
+Plataforma web de foros comunitarios (SPA) desarrollada con Angular y PHP.
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.7.
+Integrantes
+Luciano Di Giovanni
 
-## Development server
+Ignacio Sugo
 
-To start a local development server, run:
+Descripción
+Proyecto de laboratorio para la asignatura RIA y PHP 2026. La aplicación permite la gestión de usuarios, creación de posts, sistema de votación y comentarios en hilos de discusión.
 
-```bash
-ng serve
-```
+Documentación Técnica
+Toda la documentación detallada del proyecto se encuentra en el archivo: Informe_RIA-PHP.docx.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Instrucciones de Despliegue
+Para compilar y desplegar el proyecto, consulte la sección "12. Instrucciones de compilación y despliegue" dentro del documento técnico mencionado arriba.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Proyecto realizado para UTEC - 2026
